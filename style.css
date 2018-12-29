@@ -32,7 +32,7 @@ ol {
 }
 
 #cate #article {
-  padding-left: 0px;
+  padding-left: 50px;
 }
 
 @media(max-width:800px) {
