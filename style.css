@@ -22,21 +22,21 @@ ol {
   padding: 50px;
 }
 
-#grid {
+#cate {
   display: grid;
   grid-template-columns: 150px 1fr;
 }
 
-#grid ol {
+#cate ol {
   padding-left: 33px;
 }
 
-#grid #article {
+#cate #article {
   padding-left: 50px;
 }
 
 @media(max-width:800px) {
-  #grid {
+  #cate {
     display: block;
   }
 
