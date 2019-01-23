@@ -14,58 +14,58 @@ h1 {
   padding: 100px;
 }
 
-#mainWrapper {
+.mainWrapper {
   display: flex;
   flex-direction: column;
 }
 
-#header {
+.header {
   display: flex;
   border-bottom: 1px solid gray;
   flex: 1;
 }
 
-#tetris {
+.tetris {
   background-color: gray;
   flex: 1;
 }
 
-#title {
+.title {
   background-color: red;
   flex: 3;
 }
 
-#game {
+.game {
   background-color: orange;
   flex: 1;
 }
 
-#center {
+.main {
   display: flex;
   flex-direction: column;
 }
 
-#cate {
+.nav {
   display: flex;
   flex-direction: row;
 }
 
-#cate ul {flex: auto;
+.nav ul {
+  flex: auto;
   flex-direction: row;
 }
 
-#cate ol {
+.nav ol {
   flex: 6;
 }
 
-#content {
+.article {
   display: flex;
   flex-direction: column;
   background-color: blue;
-
 }
 
-#footer {
+.footer {
   background-color: #FFE4C4;
   text-align: center;
 }
