@@ -1,1 +1,0 @@
-<script>alert('tetrisModel');</script>
