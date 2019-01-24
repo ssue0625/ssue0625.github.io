@@ -25,7 +25,7 @@ h1 {
   flex: 1;
 }
 
-.tetris {
+#tetris {
   background-color: gray;
   flex: 1;
 }
