@@ -7,7 +7,8 @@ class TetrisViewModel {
     this.tetrisVeiw.show(data);
   }
   run() {
-      this.tetrisModel.getData();
+      this.tetrisModel.getData(this.showView.bind(this));
       //this.tetrisModel.showView(data);
   } 
 }
+ 
