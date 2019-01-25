@@ -1,9 +1,11 @@
 class TetrisModel {
-    getData(doAfterWork) {
-        const tetrisArea = 'tetris';
-        console.log(tetrisArea);
-        const price = 200;
-        return price;
+    getData(funk) {
+        setInterval(()=>{
+            const price = 200 * Math.random();
+            //funk(price);
+            console.log(price);
+        }, 1000);
+        
     }
 }
   

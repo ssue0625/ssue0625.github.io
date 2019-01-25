@@ -4,11 +4,19 @@ class TetrisViewModel {
     this.tetrisView = new TetrisView(display);
   }
   showView(data) {
-    this.tetrisVeiw.show(data);
+    this.tetrisView.show(data);
   }
   run() {
+      //const data = this.tetrisModel.getData();
+      //this.tetrisView.show(data);
+      console.log('시작');
+      let sum = 0;
+      
       this.tetrisModel.getData(this.showView.bind(this));
-      //this.tetrisModel.showView(data);
+      for (let i = 0; i < 990000000; i++) {
+          sum += i;
+      }
+      console.log('끝');
   } 
 }
- 
+  
