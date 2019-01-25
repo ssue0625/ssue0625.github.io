@@ -1,7 +1,8 @@
 class TetrisModel {
-    showView(afterWork) {
-        data = 100;
-        afterWork(data);
+    getData(doAfterWork) {
+        const tetrisArea = 'tetris';
+        console.log(tetrisArea);
+        //return tetrisArea;               
     }
 }
  

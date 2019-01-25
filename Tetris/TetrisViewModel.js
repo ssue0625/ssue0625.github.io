@@ -7,6 +7,7 @@ class TetrisViewModel {
     this.tetrisVeiw.show(data);
   }
   run() {
-      this.tetrisModel.showView(data);
+      this.tetrisModel.getData();
+      //this.tetrisModel.showView(data);
   } 
 }
