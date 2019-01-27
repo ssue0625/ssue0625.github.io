@@ -27,7 +27,7 @@ class TetrisPanel {
         }
     }
     getData() {
-        //this.makeData();
+        this.makeData();
         return this.panel;
     }
 }
@@ -38,9 +38,10 @@ class TetrisModel {
     getData(func) {
 //        let data = this.tetrisPanel.getData();
 //        func(data);
-        setInterval(() => {
-            func(this.tetrisPanel.getData());
-        }, 2000);
+        func(this.tetrisPanel.getData());
+//        setInterval(() => {
+//            func(this.tetrisPanel.getData());
+//        }, 2000);
     }
     
 } 

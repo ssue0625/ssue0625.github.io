@@ -1,3 +1,6 @@
+* {
+    box-sizing: border-box;
+}
 body {
   margin: 0;
 }
@@ -22,22 +25,33 @@ h1 {
 .header {
   display: flex;
   border-bottom: 1px solid gray;
+    /*
   flex: 1;
+    */
 }
 
 #tetris {
   background-color: gray;
+    flex-basis: 20%;
+    /*
   flex: 1;
+    */
 }
 
 .title {
   background-color: red;
+    flex-grow: 1;
+    /*
   flex: 3;
+    */
 }
 
 .game {
   background-color: orange;
+    flex-basis: 20%;
+    /*
   flex: 1;
+    */
 }
 
 .main {
