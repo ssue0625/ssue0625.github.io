@@ -20,21 +20,16 @@ class TetrisView {
       }
   }
   makePanel() {
-      const panelHeight = Math.floor(document.getElementById(this.tetrisArea)
+      const tetrisPanelHeight = Math.floor(document.getElementById(this.tetrisArea)
       .getBoundingClientRect().height);
-      console.log(panelHeight);
       const area = document.getElementById(this.tetrisArea);
       const table = document.createElement('table');
-      table.style.height = panelHeight;
-      table.style.width = panelHeight;
-      table.style.margin = '0 px';
-      table.style.padding = '0 px';
-      table.style.borderSpacing  = '0 px';
       area.appendChild(table);
+      table.style.height = tetrisPanelHeight + 'px';
+      table.style.width = tetrisPanelHeight + 'px';
+      table.style.borderSpacing  = '0px';
       const tbody = document.createElement('tbody');
       table.appendChild(tbody);
-      tbody.style.height = panelHeight;
-      tbody.style.width = panelHeight;
       let tr;
       let td;
       for (let i = 0; i < this.rows; i++) {
@@ -42,10 +37,6 @@ class TetrisView {
           for (let j = 0; j < this.columns; j++) 
           {
               td = document.createElement('td');       td.style.backgroundColor = 'yellow';
-              td.style.border = '1px solid black';
-              td.style.height = panelHeight / 
-                  this.rows;
-              td.style.width = panelHeight / this.columns;
               tr.appendChild(td);
           }
               tbody.appendChild(tr); 
