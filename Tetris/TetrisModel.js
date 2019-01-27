@@ -2,31 +2,32 @@ class TetrisPanel {
     constructor(tetrisRows,tetrisColumns) { 
     this.tetrisRows = tetrisRows;
     this.tetrisColumns = tetrisColumns;
-//    this.panel = [[0,0,1,1,1,0,0,0,0],
-//                  [0,0,0,0,1,0,0,0,0],
-//                  [0,0,0,0,1,0,0,0,0],
-//                  [0,0,0,0,0,0,0,0,0],
-//                  [0,0,0,0,0,0,0,0,0],
-//                  [0,0,0,0,0,0,0,0,0],
-//                  [0,0,0,0,0,0,0,0,0],
-//                  [0,0,0,0,0,0,0,0,0],
-//                  [0,0,0,0,0,0,0,0,0]];
+    setInterval(()=>{
+        this.makeData();
+    }, 2000);
     }
     makeData() {
         this.panel = [];
         let rows;
         let columns;
-        for (let i = 0; i < this.tetrisRows; i++) {
+        for (let row = 0; row < this.tetrisRows; row++) {
             rows = [];
-            for (let j = 0; j < this.tetrisColumns; j++) {
-                columns = '' + i + ':' + j;
-                rows.push(columns);
+            for (let column = 0; column < this.tetrisColumns; column++) {
+                rows.push(makeColor(row, column));
             }
             this.panel.push(rows);
         }
+        function makeColor(row, column) {
+            const colors = '0123456789abcdef';
+            let ret = '#';
+            for (let i = 0; i < 6; i++) {
+                ret += colors.charAt(Math.floor(Math.random() * 16));
+            }
+            return ret;
+        }
     }
     getData() {
-        this.makeData();
+        //this.makeData();
         return this.panel;
     }
 }
@@ -35,14 +36,12 @@ class TetrisModel {
         this.tetrisPanel = new TetrisPanel(rows, columns);
     }
     getData(func) {
-//        setInterval(()=>{
-//            const price = 200 * Math.random();
-//            //func(price);
-//            console.log(price);
-//        }, 1000);
-        let data = this.tetrisPanel.getData();
-        func(data);
+//        let data = this.tetrisPanel.getData();
+//        func(data);
+        setInterval(() => {
+            func(this.tetrisPanel.getData());
+        }, 2000);
     }
     
-}
+} 
   
