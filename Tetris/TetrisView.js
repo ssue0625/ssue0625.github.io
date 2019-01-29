@@ -10,12 +10,17 @@ class TetrisView {
         this.columns = data[0].length;    
         this.makePanel();
       }
-      return;
+      
       let rows = data.length;
       let columns = data[0].length;
+      let td;
       for (let i = 0; i < rows; i++) {
           for (let j = 0; j < columns; j++) {
-                console.log(data[i][j]);
+                //console.log(data[i][j]);
+                // 행과 열을 가지고 td를 찾는다.
+                //td = document.getElementsByClassName('tetrisCell' + i + j);
+                td = document.querySelector('.tetrisCell' + i + j);
+                td.style.backgroundColor = data[i][j];
           }
       }
   }
@@ -36,7 +41,8 @@ class TetrisView {
           tr = document.createElement('tr');
           for (let j = 0; j < this.columns; j++) 
           {
-              td = document.createElement('td');       td.style.backgroundColor = 'yellow';
+              td = document.createElement('td');       //td.style.backgroundColor = 'yellow';
+              td.className = 'tetrisCell' + i + j;
               tr.appendChild(td);
           }
               tbody.appendChild(tr); 
