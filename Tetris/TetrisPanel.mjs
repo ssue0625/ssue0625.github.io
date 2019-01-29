@@ -1,3 +1,5 @@
+import TetrisData from "./TetrisData.mjs";
+
 export default class TetrisPanel {
     constructor(tetrisRows,tetrisColumns) { 
     this.tetrisRows = tetrisRows;
@@ -17,8 +19,10 @@ export default class TetrisPanel {
             }
             this.panel.push(rows);
         }
-        if(this.sendDataWhenReady)
-        this.sendDataWhenReady(this.panel);
+        if(this.sendDataWhenReady) {
+            const data = new TetrisData(this.panel);
+            this.sendDataWhenReady(data);
+        }
         function makeColor(row, column) {
             const colors = '0123456789abcdef';
             let ret = '#';
@@ -29,8 +33,6 @@ export default class TetrisPanel {
         }
     }
     getData(func) {
-        // this.makeData();
-        // return this.panel;
         this.sendDataWhenReady = func;
     }
 }
