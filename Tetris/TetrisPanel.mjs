@@ -17,6 +17,8 @@ export default class TetrisPanel {
             }
             this.panel.push(rows);
         }
+        if(this.sendDataWhenReady)
+        this.sendDataWhenReady(this.panel);
         function makeColor(row, column) {
             const colors = '0123456789abcdef';
             let ret = '#';
@@ -26,8 +28,9 @@ export default class TetrisPanel {
             return ret;
         }
     }
-    getData() {
-        this.makeData();
-        return this.panel;
+    getData(func) {
+        // this.makeData();
+        // return this.panel;
+        this.sendDataWhenReady = func;
     }
 }

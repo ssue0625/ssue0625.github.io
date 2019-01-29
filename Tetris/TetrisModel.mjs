@@ -8,9 +8,10 @@ export default class TetrisModel {
 //        let data = this.tetrisPanel.getData();
 //        func(data);
        //func(this.tetrisPanel.getData());
-       setInterval(() => {
-           func(this.tetrisPanel.getData());
-       }, 2000); 
+    //    setInterval(() => {
+    //        func(this.tetrisPanel.getData());
+    //    }, 2000); 
+        this.tetrisPanel.getData(func);
     }
     
 } 

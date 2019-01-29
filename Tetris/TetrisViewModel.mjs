@@ -21,6 +21,7 @@ export default class TetrisViewModel {
 //      }
 //      console.log('끝');
       this.tetrisModel.getData(this.showView.bind(this));
+      
   } 
 }
   
