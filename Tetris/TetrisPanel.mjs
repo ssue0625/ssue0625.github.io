@@ -1,21 +1,26 @@
 import TetrisData from "./TetrisData.mjs";
+import TetrisBlock from "./TetrisBlock.mjs";
 
 export default class TetrisPanel {
     constructor(tetrisRows,tetrisColumns) { 
     this.tetrisRows = tetrisRows;
     this.tetrisColumns = tetrisColumns;
-    setInterval(()=>{
-        this.makeData();
-    }, 2000);
+    this.tetrisBlock = new TetrisBlock(this.makePanelData.bind(this));
+    // setInterval(()=>{
+    //     this.makePanelData();
+    // }, 2000);
     } 
-    makeData() {
+    makePanelData() {
         this.panel = [];
         let rows;
         let columns;
+        //console.log(this.tetrisColumns);
         for (let row = 0; row < this.tetrisRows; row++) {
             rows = [];
             for (let column = 0; column < this.tetrisColumns; column++) {
-                rows.push(makeColor(row, column));
+                console.log('' + row + "," + column);
+                //rows.push(makeColor(row, column));
+                rows.push('#c8c8c8');
             }
             this.panel.push(rows);
         }
