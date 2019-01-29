@@ -9,7 +9,7 @@ export default class TetrisViewModel {
   }
   showView(data) {
     this.tetrisView.show(data);
-  }
+  } 
   run() {
       //const data = this.tetrisModel.getData();
       //this.tetrisView.show(data);

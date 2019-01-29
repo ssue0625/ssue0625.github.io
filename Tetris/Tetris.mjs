@@ -4,4 +4,4 @@ import TetrisViewModel from './TetrisViewModel.mjs';
 import TetrisPanel from './TetrisPanel.mjs';
 
 const tetrisViewModel = new TetrisViewModel('tetris');
-tetrisViewModel.run();
+tetrisViewModel.run(); 

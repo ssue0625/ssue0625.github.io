@@ -1,8 +1,9 @@
+import TetrisData from './TetrisData.mjs';
 export default class TetrisView {
   constructor(tetrisArea) {
     this.tetrisArea = tetrisArea;
   }
-
+ 
   show(data) {
       if (!data) return;
       if (!this.rows) {

@@ -1,4 +1,5 @@
 import TetrisPanel from './TetrisPanel.mjs';
+import TetrisData from './TetrisData.mjs';
 export default class TetrisModel {
     constructor(rows, columns) {
         this.tetrisPanel = new TetrisPanel(rows, columns);
@@ -9,7 +10,7 @@ export default class TetrisModel {
        //func(this.tetrisPanel.getData());
        setInterval(() => {
            func(this.tetrisPanel.getData());
-       }, 2000);
+       }, 2000); 
     }
     
 } 

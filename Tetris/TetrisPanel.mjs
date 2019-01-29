@@ -5,7 +5,7 @@ export default class TetrisPanel {
     setInterval(()=>{
         this.makeData();
     }, 2000);
-    }
+    } 
     makeData() {
         this.panel = [];
         let rows;
