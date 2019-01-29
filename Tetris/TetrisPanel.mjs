@@ -1,4 +1,4 @@
-class TetrisPanel {
+export default class TetrisPanel {
     constructor(tetrisRows,tetrisColumns) { 
     this.tetrisRows = tetrisRows;
     this.tetrisColumns = tetrisColumns;
@@ -31,18 +31,3 @@ class TetrisPanel {
         return this.panel;
     }
 }
-class TetrisModel {
-    constructor(rows, columns) {
-        this.tetrisPanel = new TetrisPanel(rows, columns);
-    }
-    getData(func) {
-//        let data = this.tetrisPanel.getData();
-//        func(data);
-       //func(this.tetrisPanel.getData());
-       setInterval(() => {
-           func(this.tetrisPanel.getData());
-       }, 2000);
-    }
-    
-} 
-  

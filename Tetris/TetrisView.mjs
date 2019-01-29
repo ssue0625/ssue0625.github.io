@@ -1,4 +1,4 @@
-class TetrisView {
+export default class TetrisView {
   constructor(tetrisArea) {
     this.tetrisArea = tetrisArea;
   }

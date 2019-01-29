@@ -1,4 +1,6 @@
-class TetrisViewModel {
+import TetrisModel from './TetrisModel.mjs';
+import TetrisView from './TetrisView.mjs';
+export default class TetrisViewModel {
   constructor(display) {
     this.tetrisRows = 10;
     this.tetrisColumns = 10;
