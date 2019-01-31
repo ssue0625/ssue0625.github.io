@@ -7,5 +7,5 @@ export default class TetrisModel {
     getData(func) {
         this.tetrisPanel.getData(func);
     }
-    
+
 } 
