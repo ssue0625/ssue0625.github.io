@@ -11,4 +11,4 @@ import HelperClass from '../Utility/HelperClass.mjs';
 // mjs는 파일 단위이므로, 전역변수에 프로퍼티 추가.
 window.$ = new HelperClass();
 //window = {$: new HelperClass(), ...}
-$.d('이상해', '???');
+//$.d('이상해', '???');

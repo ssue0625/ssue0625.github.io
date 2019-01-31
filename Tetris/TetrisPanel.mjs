@@ -13,11 +13,21 @@ export default class TetrisPanel {
         //     this.makePanelData();
         // }, 2000);
     }
+    canMove(row, column) {
+        if (row > this.tetrisRows) return false;
+        if (!this.panel) return true;
+        $.c(this.panel[row][column]);
+        if (this.panel[row][column] !== '#c8c8c8') {
+            $.c(this.panel[row][column]);
+            return false;
+        }
+        return true;
+    }
     makePanelData() {
         //console.log(this.tetrisColumns);
         if (!this.panelExist) {
             let rows;
-            let columns;
+            // let columns;
             this.panel = [];
             for (let row = 0; row < this.tetrisRows; row++) {
                 rows = [];
@@ -27,9 +37,9 @@ export default class TetrisPanel {
                     rows.push('#c8c8c8');
                 }
                 this.panel.push(rows);
+                //console.log('make panel 한번 들어왔다. 이후 안들어옴');
             }
             this.panelExist = true;
-            //console.log('한번 들어왔다. 이후 안들어옴');
         }
         //console.log('매번 들어옴');
 
@@ -37,11 +47,19 @@ export default class TetrisPanel {
         const movedBlocks = this.tetrisBlock.getMovedBlocks();
         let row;
         let column;
-        for (let i = 0; i < movedBlocks.length; i++) {
-            row = movedBlocks[i].row;
-            column = movedBlocks[i].column;
+        // 지워야할 넘
+        for (let i = 0; i < movedBlocks[0].length; i++) {
+            row = movedBlocks[0][i].row;
+            column = movedBlocks[0][i].column;
+            this.panel[row][column] = '#c8c8c8';
+        }
+        // new
+        for (let i = 0; i < movedBlocks[1].length; i++) {
+            row = movedBlocks[1][i].row;
+            column = movedBlocks[1][i].column;
             this.panel[row][column] = this.tetrisBlock.color;
         }
+//$.c(this.panel);
         if (this.sendDataToViewWhenReady) {
 
             //console.log(this.panel);

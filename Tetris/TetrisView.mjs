@@ -11,7 +11,7 @@ export default class TetrisView {
         if (!this.hasPanel) {
             this.makePanel(rows, columns);
         }
-
+        //$.c(data);
         let td;
         for (let i = 0; i < rows; i++) {
             for (let j = 0; j < columns; j++) {
@@ -20,6 +20,7 @@ export default class TetrisView {
                 //td = document.getElementsByClassName('tetrisCell' + i + j);
                 td = document.querySelector('.tetrisCell' + i + j);
                 td.style.backgroundColor = data.getCellColor(i, j);
+                //$.c(data.getCellColor(i, j));
                 //console.log('view  색깔 ' +  data.getCellColor(i, j));
             }
         }
