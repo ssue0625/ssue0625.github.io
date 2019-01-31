@@ -68,4 +68,4 @@ class MyClass {
     }
     // const func = function () {};
 }
-const result = MyClass.func(345);
+const result = MyClass.func(345);   // result = 348;
