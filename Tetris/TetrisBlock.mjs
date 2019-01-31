@@ -24,7 +24,7 @@ export default class TetrisBlock {
         if (this.newDeltaRow > this.tetrisPanel.tetrisRows || !isMovable(this.deltaRow, this.newDeltaColumn)) {
             clearInterval(this.handle);
             $.c('인터벌 죽음');
-            this.tetrisPanel.informIAmDead();
+            //this.tetrisPanel.informIAmDead();
             return;
         }
         this.makePanelDataWhenMoved();
