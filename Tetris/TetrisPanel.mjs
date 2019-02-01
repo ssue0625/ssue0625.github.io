@@ -12,7 +12,7 @@ export default class TetrisPanel {
     }
     informIAmDead(row) {
         if (row != 1) { 
-            $.c(row);
+            //$.c(row);
             this.tetrisBlock = new TetrisBlock(this, this.makePanelData.bind(this));
         }
     }
@@ -21,13 +21,13 @@ export default class TetrisPanel {
         if (!this.panel) return true;
         //$.c(this.panel[row][column]);
         if (this.panel[row][column] !== '#c8c8c8') {
-            $.c(row, column, this.panel[row][column]);
+            //$.c(row, column, this.panel[row][column]);
             return false;
         } else {
-            $.c(row, column, this.panel[row][column]);
+            //$.c(row, column, this.panel[row][column]);
             return true;
         }
-    }
+    } 
     makePanelData() {
         //console.log(this.tetrisColumns);
         if (!this.panelExist) {
