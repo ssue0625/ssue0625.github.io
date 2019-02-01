@@ -11,7 +11,7 @@ export default class TetrisPanel {
         // }, 2000);
     }
     informIAmDead(row) {
-        if (row != 1) {
+        if (row != 1) { 
             $.c(row);
             this.tetrisBlock = new TetrisBlock(this, this.makePanelData.bind(this));
         }

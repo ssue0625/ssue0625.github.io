@@ -6,6 +6,7 @@ import HelperClass from '../Utility/HelperClass.mjs';
 // const tetrisViewModel = new TetrisViewModel('tetris');
 // tetrisViewModel.run(); 
 (new TetrisViewModel('tetris')).run();  //IIFE
+//(new TetrisViewModel('game')).run();  //IIFE
 // const $ = new HelperClass();
 // $.c('ppp'); 
 // mjs는 파일 단위이므로, 전역변수에 프로퍼티 추가.

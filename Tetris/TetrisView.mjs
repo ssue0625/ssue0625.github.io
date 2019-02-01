@@ -13,12 +13,15 @@ export default class TetrisView {
         }
         //$.c(data);
         let td;
+        //let area = document.getElementById(this.tetrisArea);
         for (let i = 0; i < rows; i++) {
             for (let j = 0; j < columns; j++) {
                 //console.log(data[i][j]);
                 // 행과 열을 가지고 td를 찾는다.
                 //td = document.getElementsByClassName('tetrisCell' + i + j);
-                td = document.querySelector('.tetrisCell' + i + j);
+                //td = document.querySelector('.tetrisCell' + i + j);
+                //td = area.querySelector('.tetrisCell' + i + j);
+                td = document.querySelector('#' + this.tetrisArea + ' .tetrisCell' + i + j);
                 td.style.backgroundColor = data.getCellColor(i, j);
                 //$.c(data.getCellColor(i, j));
                 //console.log('view  색깔 ' +  data.getCellColor(i, j));
