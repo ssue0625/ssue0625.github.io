@@ -1,6 +1,7 @@
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
+
 body {
   margin: 0;
 }
@@ -25,58 +26,39 @@ h1 {
 .header {
   display: flex;
   border-bottom: 1px solid gray;
-    /*
-  flex: 1;
-    */
 }
 
 #tetris {
-  background-color: gray;
-    flex-basis: 20%;
-    /*
-  flex: 1;
-    */
+  flex-basis: 15%;
 }
 
 .title {
-  background-color: red;
-    flex-grow: 1;
-    /*
-  flex: 3;
-    */
+  background-color: green;
+  flex-grow: 1;
 }
 
 .game {
   background-color: orange;
-    flex-basis: 20%;
-    /*
-  flex: 1;
-    */
+  flex-basis: 20%;
 }
 
 .main {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
 }
 
 .nav {
   display: flex;
-  flex-direction: row;
-}
-
-.nav ul {
-  flex: auto;
-  flex-direction: row;
-}
-
-.nav ol {
-  flex: 6;
+  flex-direction: column;
+  padding-left: 80px;
+  padding-right: 80px;
+  border-right: 1px solid gray;
 }
 
 .article {
   display: flex;
-  flex-direction: column;
-  background-color: blue;
+  flex-direction: row;
+  padding: 30px;
 }
 
 .footer {
