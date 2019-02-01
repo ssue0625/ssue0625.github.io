@@ -3,9 +3,6 @@ import TetrisBlock from "./TetrisBlock.mjs";
 
 export default class TetrisPanel {
     constructor(tetrisRows, tetrisColumns) {
-        this.informIAmDead = () => {
-            this.tetrisBlock = new TetrisBlock(this, this.makePanelData.bind(this));
-        }
         this.tetrisRows = tetrisRows;
         this.tetrisColumns = tetrisColumns;
         this.tetrisBlock = new TetrisBlock(this, this.makePanelData.bind(this));
@@ -13,15 +10,23 @@ export default class TetrisPanel {
         //     this.makePanelData();
         // }, 2000);
     }
+    informIAmDead(row) {
+        if (row != 1) {
+            $.c(row);
+            this.tetrisBlock = new TetrisBlock(this, this.makePanelData.bind(this));
+        }
+    }
     canMove(row, column) {
         if (row > this.tetrisRows) return false;
         if (!this.panel) return true;
-        $.c(this.panel[row][column]);
+        //$.c(this.panel[row][column]);
         if (this.panel[row][column] !== '#c8c8c8') {
-            $.c(this.panel[row][column]);
+            $.c(row, column, this.panel[row][column]);
             return false;
+        } else {
+            $.c(row, column, this.panel[row][column]);
+            return true;
         }
-        return true;
     }
     makePanelData() {
         //console.log(this.tetrisColumns);
@@ -59,7 +64,7 @@ export default class TetrisPanel {
             column = movedBlocks[1][i].column;
             this.panel[row][column] = this.tetrisBlock.color;
         }
-//$.c(this.panel);
+        //$.c(this.panel);
         if (this.sendDataToViewWhenReady) {
 
             //console.log(this.panel);

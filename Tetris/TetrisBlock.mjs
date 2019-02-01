@@ -2,29 +2,29 @@ export default class TetrisBlock {
     constructor(tetrisPanel, makePanelData) {
         this.tetrisPanel = tetrisPanel;
         this.color = this._makeColor();
-        this.shape = [[{ row: -2, column: 5 }, { row: -2, column: 6 }],
-        [{ row: -1, column: 5 }, { row: -1, column: 6 }]];
+        this.shape = [[{ row: -2, column: 0 }, { row: -2, column: 1 }],
+        [{ row: -1, column: 0 }, { row: -1, column: 1 }]];
         this.deltaRow = 0;
-        this.deltaColumn = 0;
-        this.newDeltaRow = 0;
-        this.newDeltaColumn = 0;
+        this.deltaColumn = 4;
+        this.newDeltaRow = this.deltaRow;
+        this.newDeltaColumn = this.deltaColumn;
         this.makePanelDataWhenMoved = makePanelData;
         this.handle = setInterval(() => {
             this.moveDown();
         }, 1000);
 
-
+ 
     }
     moveDown() {
         this.newDeltaRow++;
         const isMovable = this.tetrisPanel.canMove.bind(this.tetrisPanel);
         //$.c(isMovable(this.deltaRow, this.deltaColumn));
-        $.c('tetrisPanel Rows' + this.tetrisPanel.tetrisRows);
+       // $.c('tetrisPanel Rows' + this.tetrisPanel.tetrisRows);
         //$.c('newDeltaRow' + this.newDeltaRow);
         if (this.newDeltaRow > this.tetrisPanel.tetrisRows || !isMovable(this.deltaRow, this.newDeltaColumn)) {
             clearInterval(this.handle);
             $.c('인터벌 죽음');
-            //this.tetrisPanel.informIAmDead();
+            this.tetrisPanel.informIAmDead(this.newDeltaRow);
             return;
         }
         this.makePanelDataWhenMoved();
