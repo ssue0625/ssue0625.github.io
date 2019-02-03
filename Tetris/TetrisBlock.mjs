@@ -5,7 +5,7 @@ export default class TetrisBlock {
         this.color = this._makeColor();
         // this.shape = [[{ row: -2, column: 0 }, { row: -2, column: 1 }],
         //              [{ row: -1, column: 0 }, { row: -1, column: 1 }]];
-        this.shape = [
+        this.shapes = [
             [
                 [1, 1],
                 [1, 1]
@@ -22,12 +22,18 @@ export default class TetrisBlock {
             ],
             [
                 [0, 1, 0],
-                [0, 1, 0],
-                [0, 1, 0]
+                [1, 1, 1],
+                [0, 0, 0]
+            ],
+            [
+                [0, 1, 0, 0],
+                [0, 1, 0, 0],
+                [0, 1, 0, 0],
+                [0, 1, 0, 0]
             ]
         ];
-        this.shapes = this.shape[0];
-        // this.shapes = this.shape(Math.floor(Math.random()*4));
+        //this.shape = this.shapes[3];
+        this.shape = this.shapes[Math.floor(Math.random() * this.shapes.length)];
         // 배열의 사이즈
         // 배열행 : 기준점에서의 위치
         this.deltaRow = 0;
@@ -39,6 +45,7 @@ export default class TetrisBlock {
         this.handle = setInterval(() => {
             this.moveDown();
         }, 100);
+        
     }
     makeBlocks() {
         const rowSize = this.shape.length;
