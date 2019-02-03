@@ -68,8 +68,8 @@ export default class TetrisBlock {
                     cell.rowIndexToDraw = blockRowIndex;
                     cell.columnIndexToDraw = blockColumnIndex;
                 } else {
-                    $.c('죽는 곳');
-            $.c('canDown: ', blockRowIndex, blockColumnIndex, this.tetrisPanel.tetrisRows);
+                    //$.c('죽는 곳');
+            //$.c('canDown: ', blockRowIndex, blockColumnIndex, this.tetrisPanel.tetrisRows);
                    cell.canDraw = false;
                     result = false;
                     break;
@@ -87,32 +87,23 @@ export default class TetrisBlock {
             //$.d(this.blocks);
         }
         this.newDeltaRow++;
-        if (!this.canBlockDown()) {
+        // 테트리스 블럭의 각각의 셀들의 새로운 위치를 정해준 후, 움직일 수 있는지 체크
+        for (let cell of this.blocks) {
+            cell.rowIndexToDraw = cell.rowIndex + this.newDeltaRow;
+            cell.columnIndexToDraw = cell.columnIndex + this.newDeltaColumn;
+            //$.c('block',cell.rowIndexToDraw,cell.columnIndexToDraw);
+        }
+        if (!this.tetrisPanel.canMove()) {
             // 죽인다.
             clearInterval(this.handle);
             $.c('인터벌 죽음');
-            //this.tetrisPanel.informIAmDead();
+            this.tetrisPanel.informIAmDead(this.newDeltaRow);
             return;
-        }
-        //const isMovable = this.tetrisPanel.canMove.bind(this.tetrisPanel);
-        //$.c(isMovable(this.deltaRow, this.deltaColumn));
-        // $.c('tetrisPanel Rows' + this.tetrisPanel.tetrisRows);
-        //$.c('newDeltaRow' + this.newDeltaRow);
-        // if (this.newDeltaRow > this.tetrisPanel.tetrisRows
-        //     || !isMovable(this.deltaRow, this.newDeltaColumn)) {
-        //     clearInterval(this.handle);
-        //     $.c('인터벌 죽음');
-        //     //this.tetrisPanel.informIAmDead();
-        //     return;
-        // }
-        $.c('여기');
+        } 
+        if (this.canMovable) {
         this.makePanelDataWhenMoved();
-        // this.deltaRow = this.newDeltaRow;
-        // this.deltaColumn = this.newDeltaColumn;
+        }
     }
-    // getPosition() {
-    //     return this.shape + deltaRow;
-    // }
     _makeColor() {
         const colors = '0123456789abcdef';
         let ret = '#';

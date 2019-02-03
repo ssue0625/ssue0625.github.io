@@ -19,69 +19,82 @@ export default class TetrisPanel {
     clearCell(row, column) {
         this.panel[row][column] = this.backGroundColor;
     }
-    isEmpty(row, column) {
-        if (this.panel[row][column] !== this.backGroundColor) {
-            return false;
-        } else {
-            return true;
-        }
-    }
+
     informIAmDead(row) {
-        if (row != 1) { 
+        if (row != 1) {
             //$.c(row);
             this.tetrisBlock = new TetrisBlock(this, this.changePanelBackground.bind(this));
-        }
+        } 
     }
-    canMove(row, column) {
-        if (row > this.tetrisRows) return false;
-        //$.c(this.panel[row][column]);
-
-        if (this.panel[row][column] !== this.backGroundColor) {
-            //$.c(row, column, this.panel[row][column]);
+    _isEmpty(row, column) {
+        //$.c('empty',row,column, this.panel[row][column]);
+        if (this.panel[row][column] != this.backGroundColor) {
+            //$.c(false, row, column);
             return false;
         } else {
-            //$.c(row, column, this.panel[row][column]);
+            //$.c(true, row, column);
             return true;
         }
-    } 
+    }
+    canMove() {
+        let result = true;
+        // TetrisBlock의 Blocks가 움직일 수 있는지를 조사
+        // Blocks는 Cell의 집합 : 기존 위치 && 새로운 위치
+        // 새로 그릴 위치 확인을 위해 패널에서 기존에 그려진 블럭을 지운다 
+        for (let cell of this.tetrisBlock.blocks) {
+            if (cell.rowIndexDrawn != -1 && cell.columnIndexDrawn != -1) {
+                this.panel[cell.rowIndexDrawn][cell.columnIndexDrawn] = this.backGroundColor;
+            }
+        }
+        // 이동 가능성을 체크한 후, 가능 여부 저장
+        this.tetrisBlock.canMovable = true;
+        for (let cell of this.tetrisBlock.blocks) {
+            if (cell.rowIndexToDraw >= this.tetrisRows) {
+                //$.c('사이즈 넘어섬', cell.rowIndexToDraw, this.panel.rowSize);
+                result = false;
+                break;             
+            }
+            //$.c('사이즈 안넘어섬', cell.rowIndexToDraw, this.panel.rowSize);
+
+            if (cell.rowIndexToDraw >= 0) {
+                //$.c(cell.rowIndexToDraw, cell.columnIndexToDraw);
+                if (!this._isEmpty(cell.rowIndexToDraw, cell.columnIndexToDraw)) {
+                    //$.c('죽어라');
+                    this.tetrisBlock.canMovable = false;
+                    result = false;
+                    break;
+                }
+            }
+        }
+        // 기존의 그림을 그려 놓는다.
+        for (let cell of this.tetrisBlock.blocks) {
+            if (cell.rowIndexDrawn != -1 && cell.columnIndexDrawn != -1) {
+                this.panel[cell.rowIndexDrawn][cell.columnIndexDrawn] = this.tetrisBlock.color;
+            }
+        }
+        return result;
+    }
     changePanelBackground() {   // 테트리스 블럭의 움직임을 반영.
-        // tetrisBlock의 변화된 값 반영
-        //const movedBlocks = this.tetrisBlock.getMovedBlocks();
         let row;
         let column;
-        // 지워야할 넘
-        // for (let i = 0; i < movedBlocks[0].length; i++) {
-        //     row = movedBlocks[0][i].row;
-        //     column = movedBlocks[0][i].column;
-        //     this.panel[row][column] = this.backGroundColor;
-        // }
-        // for (let cell of this.tetrisBlock.blocks) {
-        //     if (cell.isDrew) { 
-        //         row = cell.rowIndexDrew;
-        //         column = cell.columnIndexDrew;
-        //         $.c(row, column, this.panel[row][column]);
-        //         this.panel[row][column] = this.backGroundColor;
-        //     }
-        // }
-        // new
-        // for (let i = 0; i < movedBlocks[1].length; i++) {
-        //     row = movedBlocks[1][i].row;
-        //     column = movedBlocks[1][i].column;
-        //     this.panel[row][column] = this.tetrisBlock.color;
-        // }
-        // this.tetrisBlock.blocks 에 있는 셀 중에서
-        // cell.canDraw가 True인 놈들을 Panel에 this.tetrisBlock.color을 넣는다.
+        // 기존꺼 지우기    
         for (let cell of this.tetrisBlock.blocks) {
-            if (cell.canDraw) {
-                row = cell.rowIndexToDraw;
-                column = cell.columnIndexToDraw;
-                this.panel[row][column] = this.tetrisBlock.color;
-                cell.isDrawn = true;
+            if (cell.rowIndexDrawn != -1 && cell.columnIndexDrawn != -1) {
+                row = cell.rowIndexDrawn;
+                column = cell.columnIndexDrawn;
+                this.panel[row][column] = this.backGroundColor;
+                cell.rowIndexDrawn = -1;
+                cell.columnIndexDrawn = -1;
+            }
+        }
+        // 새로운거 그리기
+        for (let cell of this.tetrisBlock.blocks) {
+            if (cell.rowIndexToDraw != -1 && cell.columnIndexToDraw != -1) {
+                this.panel[cell.rowIndexToDraw][cell.columnIndexToDraw] = this.tetrisBlock.color;
                 cell.rowIndexDrawn = cell.rowIndexToDraw;
                 cell.columnIndexDrawn = cell.columnIndexToDraw;
             }
         }
-
         //$.c(this.panel);
         if (this.sendDataToViewWhenReady) {
             //console.log(this.panel);

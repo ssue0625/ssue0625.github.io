@@ -8,5 +8,9 @@ export default class PanelCell{
         // const arr = [1, 2, 3, 4];   // arr.length, arr[0]
         this.rowIndex = row;
         this.columnIndex = column;
+        this.rowIndexDrawn = -1;
+        this.columnIndexDrawn = -1;
+        //this.rowIndexToDraw
+        //this.columnIndexToDraw
     }
 }
