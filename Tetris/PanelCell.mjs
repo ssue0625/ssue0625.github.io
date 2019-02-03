@@ -1,4 +1,4 @@
-export default class PanelBlock{
+export default class PanelCell{
     constructor(row,column) {
         // const shape = [ // shape.length
         //     [1, 2, 3],  // shape[0] == [1, 2, 3], const arr = shape[0]

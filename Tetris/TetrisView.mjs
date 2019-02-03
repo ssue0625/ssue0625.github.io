@@ -4,7 +4,7 @@ export default class TetrisView {
         this.tetrisArea = tetrisArea;
     }
 
-    show(data) {
+    render(data) {
         if (!(data instanceof TetrisData)) return;
         let rows = data.rowsNumber;
         let columns = data.columnsNumber;

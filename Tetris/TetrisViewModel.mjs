@@ -7,12 +7,12 @@ export default class TetrisViewModel {
     this.tetrisModel = new TetrisModel(this.tetrisRows, this.tetrisColumns);
     this.tetrisView = new TetrisView(display);
   }
-  showView(data) {
-    this.tetrisView.show(data);
+  renderData(data) {
+    this.tetrisView.render(data);
   } 
   run() {
       //const data = this.tetrisModel.getData();
-      //this.tetrisView.show(data);
+      //this.tetrisView.render(data);
 //      console.log('시작');
 //      let sum = 0;
 //      this.tetrisModel.getData(this.showView.bind(this));
@@ -20,7 +20,7 @@ export default class TetrisViewModel {
 //          sum += i;
 //      }
 //      console.log('끝');
-      this.tetrisModel.getData(this.showView.bind(this));
+      this.tetrisModel.getData(this.renderData.bind(this));
       
   } 
 }
