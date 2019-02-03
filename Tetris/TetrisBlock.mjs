@@ -5,14 +5,31 @@ export default class TetrisBlock {
         this.color = this._makeColor();
         // this.shape = [[{ row: -2, column: 0 }, { row: -2, column: 1 }],
         //              [{ row: -1, column: 0 }, { row: -1, column: 1 }]];
-        this.shape = [[1, 1],
-                      [1, 1]];
+        this.shape = [
+            [
+                [1, 1],
+                [1, 1]
+            ],
+            [
+                [1, 1, 0],
+                [0, 1, 0],
+                [0, 1, 0]
+            ],
+            [
+                [1, 1, 0],
+                [0, 1, 1],
+                [0, 0, 0]
+            ],
+            [
+                [0, 1, 0],
+                [0, 1, 0],
+                [0, 1, 0]
+            ]
+        ];
+        this.shapes = this.shape[0];
+        // this.shapes = this.shape(Math.floor(Math.random()*4));
         // 배열의 사이즈
         // 배열행 : 기준점에서의 위치
-        // this.shapeTest = [[1, 1, 0],    // 0 => -2 : 0 - 3 = -3 + 1  // rowSize = 3
-        //                  [0, 1, 0],    // 1 => -1 : 1 - 3 = -2 + 1
-        //                  [0, 1, 0]];   // 2 =>  0 : 2 - 3 = -1 + 1
-        //this.blocks = new PanelCell(this.shape);
         this.deltaRow = 0;
         this.deltaColumn = 4;
         this.newDeltaRow = this.deltaRow;
@@ -57,9 +74,9 @@ export default class TetrisBlock {
             //$.c('newDelta ' + this.newDeltaRow);
             //$.c('canDown: ', blockRowIndex, blockColumnIndex, this.tetrisPanel.tetrisRows);
             // 이동 가능한가? 죽어야 하는가?
-            if (blockRowIndex >= 0 
-                && blockRowIndex < this.tetrisPanel.tetrisRows) {
-                    //$.c('if');
+            if (blockRowIndex >= 0 &&
+                blockRowIndex < this.tetrisPanel.tetrisRows) {
+                //$.c('if');
                 const downable = isMovable(blockRowIndex, blockColumnIndex);
                 if (downable) {
                     //$.d(cell);
@@ -69,14 +86,14 @@ export default class TetrisBlock {
                     cell.columnIndexToDraw = blockColumnIndex;
                 } else {
                     //$.c('죽는 곳');
-            //$.c('canDown: ', blockRowIndex, blockColumnIndex, this.tetrisPanel.tetrisRows);
-                   cell.canDraw = false;
+                    //$.c('canDown: ', blockRowIndex, blockColumnIndex, this.tetrisPanel.tetrisRows);
+                    cell.canDraw = false;
                     result = false;
                     break;
                     // 죽인다.
                 }
                 //$.c(blockRowIndex,blockColumnIndex, downable);
-            } 
+            }
         }
         //$.c('끛');
         return result;
@@ -99,9 +116,9 @@ export default class TetrisBlock {
             $.c('인터벌 죽음');
             this.tetrisPanel.informIAmDead(this.newDeltaRow);
             return;
-        } 
+        }
         if (this.canMovable) {
-        this.makePanelDataWhenMoved();
+            this.makePanelDataWhenMoved();
         }
     }
     _makeColor() {
