@@ -1,5 +1,5 @@
-export default class PanelCell{
-    constructor(row,column) {
+export default class PanelCell {
+    constructor(row, column) {
         // const shape = [ // shape.length
         //     [1, 2, 3],  // shape[0] == [1, 2, 3], const arr = shape[0]
         //     [0, 0, 1],  // shape[0].legth

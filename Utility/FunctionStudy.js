@@ -5,7 +5,7 @@
 // 비로소 블랙박스가 되었다.
 // y = greet(x);
 // 기본 함수 제작
-function declaredGreet() {  // 선언적 함수
+function declaredGreet() { // 선언적 함수
     // 모니터에 출력을  하는 넘이 누군지 찾아야해..
     // const monitor = window.getMonitor();
     // const monitorJobQueue = monitor.getJobQueu();
@@ -19,7 +19,7 @@ function declaredGreet() {  // 선언적 함수
 }
 (function () {
     return;
-})();       // IIFE
+})(); // IIFE
 const LiteralGreet = function (name) { // name : 매개변수 parameter
     console.log('Hello, ' + name);
     return;
@@ -36,7 +36,7 @@ const LiteralGreet = function (name) { // name : 매개변수 parameter
 //const greet = name => console.log(name);
 
 // 함수를 반환하는 넘
-const greet = _=>{
+const greet = _ => {
     return name => {
         console.log(name);
     };
@@ -47,7 +47,7 @@ const functionResult = greet(); // 함수 리턴값을 받는 방법..
 // 함수에 인자 전달시, 함수도 전달할 수 있다.
 //anotherGreet('수빈');    // 호출 방법, 인자 / 인수를 전달 argument
 //anotherGreet('수빈');    // 호출 방법, 인자 / 인수를 전달 argument
-(anotherGreet())('수빈~ ');  // iife
+(anotherGreet())('수빈~ '); // iife
 //
 // 100만줄
 //
@@ -68,4 +68,4 @@ class MyClass {
     }
     // const func = function () {};
 }
-const result = MyClass.func(345);   // result = 348;
+const result = MyClass.func(345); // result = 348;

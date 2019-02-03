@@ -9,4 +9,4 @@ export default class TetrisModel {
         this.tetrisPanel.getData(func);
     }
 
-} 
+}

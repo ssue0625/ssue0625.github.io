@@ -16,8 +16,18 @@ export default class TetrisBlock {
                 [0, 1, 0]
             ],
             [
+                [0, 1, 1],
+                [0, 1, 0],
+                [0, 1, 0]
+            ],
+            [
                 [1, 1, 0],
                 [0, 1, 1],
+                [0, 0, 0]
+            ],
+            [
+                [0, 1, 1],
+                [1, 1, 0],
                 [0, 0, 0]
             ],
             [
@@ -45,7 +55,7 @@ export default class TetrisBlock {
         this.handle = setInterval(() => {
             this.moveDown();
         }, 100);
-        
+
     }
     makeBlocks() {
         const rowSize = this.shape.length;

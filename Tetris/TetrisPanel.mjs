@@ -24,7 +24,7 @@ export default class TetrisPanel {
         if (row != 1) {
             //$.c(row);
             this.tetrisBlock = new TetrisBlock(this, this.changePanelBackground.bind(this));
-        } 
+        }
     }
     _isEmpty(row, column) {
         //$.c('empty',row,column, this.panel[row][column]);
@@ -52,7 +52,7 @@ export default class TetrisPanel {
             if (cell.rowIndexToDraw >= this.tetrisRows) {
                 //$.c('사이즈 넘어섬', cell.rowIndexToDraw, this.panel.rowSize);
                 result = false;
-                break;             
+                break;
             }
             //$.c('사이즈 안넘어섬', cell.rowIndexToDraw, this.panel.rowSize);
 
@@ -74,7 +74,7 @@ export default class TetrisPanel {
         }
         return result;
     }
-    changePanelBackground() {   // 테트리스 블럭의 움직임을 반영.
+    changePanelBackground() { // 테트리스 블럭의 움직임을 반영.
         let row;
         let column;
         // 기존꺼 지우기    
@@ -101,6 +101,7 @@ export default class TetrisPanel {
             const data = new TetrisData(this.panel);
             this.sendDataToViewWhenReady(data);
         }
+
         function makeColor(row, column) {
             const colors = '0123456789abcdef';
             let ret = '#';
