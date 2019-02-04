@@ -89,7 +89,11 @@ export default class TetrisPanel {
         }
         // 새로운거 그리기
         for (let cell of this.tetrisBlock.blocks) {
-            if (cell.rowIndexToDraw != -1 && cell.columnIndexToDraw != -1) {
+            // 둘 다 -1 이 아닐 때 들어옴..
+            // 하지만 에러 : 하나만 음수면 들어올 수 있음..
+            // 둘 다 양수이면 들어와야 함.
+            if (cell.rowIndexToDraw >= 0 && cell.columnIndexToDraw >= 0) {
+                //$.c(cell.rowIndexToDraw,cell.columnIndexToDraw);
                 this.panel[cell.rowIndexToDraw][cell.columnIndexToDraw] = this.tetrisBlock.color;
                 cell.rowIndexDrawn = cell.rowIndexToDraw;
                 cell.columnIndexDrawn = cell.columnIndexToDraw;
