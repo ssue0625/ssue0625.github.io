@@ -52,10 +52,10 @@ export default class TetrisBlock {
         this.newDeltaColumn = this.deltaColumn;
         this.makePanelDataWhenMoved = makePanelData;
         //this.blocks;
-        this.handle = setInterval(() => {
-            this.moveDown();
-        }, 100);
-
+        //this.handle;
+        setTimeout(() => {
+            this.moveDownFirst();
+        }, 0);
     }
     makeBlocks() {
         const rowSize = this.shape.length;
@@ -115,22 +115,30 @@ export default class TetrisBlock {
         //$.c('끛');
         return result;
     }
-    moveDown() {
+    inputKey(key) {
+        //key가 뭐지? 상, 하, 좌, 우 화살표만 반응..
+        $.c('키', key);
+    }
+    moveDownFirst() {
         if (!this.blocks) {
             this.makeBlocks();
-            //$.d(this.blocks);
         }
+        this.handle = setInterval(() => {
+            this.moveDown();
+        }, 100);
+    }
+    moveDown() {
+        // Down 키가 눌렸으므로, 행을 하나 내린다.
         this.newDeltaRow++;
         // 테트리스 블럭의 각각의 셀들의 새로운 위치를 정해준 후, 움직일 수 있는지 체크
         for (let cell of this.blocks) {
             cell.rowIndexToDraw = cell.rowIndex + this.newDeltaRow;
             cell.columnIndexToDraw = cell.columnIndex + this.newDeltaColumn;
-            //$.c('block',cell.rowIndexToDraw,cell.columnIndexToDraw);
         }
-        if (!this.tetrisPanel.canMove()) {
-            // 죽인다.
+        this.tetrisPanel.checkMovable();    // needToDie, canMovable
+        if (this.needToDie || (!this.canMovable && this.newDeltaRow == 1)) {
             clearInterval(this.handle);
-            $.c('인터벌 죽음');
+            $.c('새로운 블럭 생성'); 
             this.tetrisPanel.informIAmDead(this.newDeltaRow);
             return;
         }

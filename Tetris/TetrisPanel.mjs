@@ -36,8 +36,9 @@ export default class TetrisPanel {
             return true;
         }
     }
-    canMove() {
-        let result = true;
+    checkMovable() {// needToDie, canMovable
+        this.tetrisBlock.needToDie = false;
+        this.tetrisBlock.canMovable = true;
         // TetrisBlock의 Blocks가 움직일 수 있는지를 조사
         // Blocks는 Cell의 집합 : 기존 위치 && 새로운 위치
         // 새로 그릴 위치 확인을 위해 패널에서 기존에 그려진 블럭을 지운다 
@@ -47,21 +48,18 @@ export default class TetrisPanel {
             }
         }
         // 이동 가능성을 체크한 후, 가능 여부 저장
-        this.tetrisBlock.canMovable = true;
         for (let cell of this.tetrisBlock.blocks) {
             if (cell.rowIndexToDraw >= this.tetrisRows) {
-                //$.c('사이즈 넘어섬', cell.rowIndexToDraw, this.panel.rowSize);
-                result = false;
+                this.tetrisBlock.canMovable = false;
+                this.tetrisBlock.needToDie = true;
+                //$.c('죽임');
                 break;
             }
-            //$.c('사이즈 안넘어섬', cell.rowIndexToDraw, this.panel.rowSize);
-
             if (cell.rowIndexToDraw >= 0) {
-                //$.c(cell.rowIndexToDraw, cell.columnIndexToDraw);
+                //$.c('이동가능성 체크 진입');
                 if (!this._isEmpty(cell.rowIndexToDraw, cell.columnIndexToDraw)) {
-                    //$.c('죽어라');
-                    this.tetrisBlock.canMovable = false;
-                    result = false;
+                //$.c('이동가능성 체크: 이동 불가');
+                this.tetrisBlock.canMovable = false;
                     break;
                 }
             }
@@ -72,7 +70,7 @@ export default class TetrisPanel {
                 this.panel[cell.rowIndexDrawn][cell.columnIndexDrawn] = this.tetrisBlock.color;
             }
         }
-        return result;
+        //$.c(this.tetrisBlock.canMovable,this.tetrisBlock.needToDie);
     }
     changePanelBackground() { // 테트리스 블럭의 움직임을 반영.
         let row;
