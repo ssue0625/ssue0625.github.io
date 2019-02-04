@@ -57,10 +57,14 @@ export default class TetrisPanel {
             }
             if (cell.rowIndexToDraw >= 0) {
                 //$.c('이동가능성 체크 진입');
+                // if (cell.columnIndexToDraw < 0) {
+                //     this.tetrisBlock.canMovable = false;
+                //     break;
+                // }
                 if (!this._isEmpty(cell.rowIndexToDraw, cell.columnIndexToDraw)) {
                 //$.c('이동가능성 체크: 이동 불가');
                 this.tetrisBlock.canMovable = false;
-                    break;
+                break;
                 }
             }
         }
