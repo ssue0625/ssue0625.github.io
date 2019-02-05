@@ -2,6 +2,7 @@ import PanelCell from './PanelCell.mjs';
 export default class TetrisBlock {
     constructor(tetrisPanel, makePanelData) {
         this.tetrisPanel = tetrisPanel;
+        this.speed = 300;
         this.color = this._makeColor();
         // this.shape = [[{ row: -2, column: 0 }, { row: -2, column: 1 }],
         //              [{ row: -1, column: 0 }, { row: -1, column: 1 }]];
@@ -73,9 +74,9 @@ export default class TetrisBlock {
                     [0, 1, 1]
                 ],
                 [
-                    [0, 0, 1],
-                    [0, 1, 1],
-                    [0, 1, 0]
+                    [0, 1, 0],
+                    [1, 1, 0],
+                    [1, 0, 0]
                 ]
             ],
             [
@@ -85,9 +86,9 @@ export default class TetrisBlock {
                     [0, 0, 0]
                 ],
                 [   // 첫번째 회전 모양
-                    [1, 0, 0],
-                    [1, 1, 0],
-                    [0, 1, 0]
+                    [0, 1, 0],
+                    [0, 1, 1],
+                    [0, 0, 1]
                 ],
                 [
                     [0, 0, 0],
@@ -149,8 +150,10 @@ export default class TetrisBlock {
                 ]
             ]
         ];
+        this.rotateIndex = 0;
         //this.shape = this.shapes[3];
-        this.shape = this.shapes[Math.floor(Math.random() * this.shapes.length)][0];
+        this.shapeIndex = Math.floor(Math.random() * this.shapes.length);
+        this.shape = this.shapes[this.shapeIndex][this.rotateIndex];
         // 배열의 사이즈
         // 배열행 : 기준점에서의 위치
         this.deltaRow = 0;
@@ -158,28 +161,34 @@ export default class TetrisBlock {
         this.newDeltaRow = this.deltaRow;
         this.newDeltaColumn = this.deltaColumn;
         this.makePanelDataWhenMoved = makePanelData;
-        //this.blocks;
+        //this.blocks = new TetrisCells(this.shapeIndex, this.rotateIndex);
         //this.handle;
         setTimeout(() => {
             this.moveDownFirst();
         }, 0);
     }
-    makeBlocks() {
-        const rowSize = this.shape.length;
-        const columnSize = this.shape[0].length;
+    _getNextRotateIndex() { // 새로운 Rotate Index를 만드는 방법!
+        let shapeSize = this.shapes[this.shapeIndex].length;
+        let newRotateIndex = this.rotateIndex + 1;
+        if (newRotateIndex == shapeSize) { 
+            newRotateIndex = 0;
+        }
+        return newRotateIndex;
+    }
+    makeTetrisCells(shapeIndex, rotateIndex) {
+        const cells = [];
+        const rowSize = this.shapes[shapeIndex][rotateIndex].length;
+        const columnSize = this.shapes[shapeIndex][rotateIndex][0].length;
         let shapeElement;
-        this.blocks = [];
         for (let rowIndex = 0; rowIndex < rowSize; rowIndex++) {
             for (let columnIndex = 0; columnIndex < columnSize; columnIndex++) {
-                shapeElement = this.shape[rowIndex][columnIndex];
+                shapeElement = this.shapes[shapeIndex][rotateIndex][rowIndex][columnIndex];
                 if (shapeElement == 1) {
-                    //$.c(rowIndex - rowSize, columnIndex);
-                    this.blocks.push(new PanelCell(rowIndex - rowSize, columnIndex));
-                } else {
-                    continue;
+                    cells.push(new PanelCell(rowIndex - rowSize, columnIndex));
                 }
             }
         }
+        return cells;
     }
     canBlockDown() {
         for (let cell of this.blocks) {
@@ -234,12 +243,12 @@ export default class TetrisBlock {
     }
     moveDownFirst() {
         if (!this.blocks) {
-            this.makeBlocks();
+            this.blocks = this.makeTetrisCells(this.shapeIndex, this.rotateIndex);
         }
         this.handle = setInterval(() => {
             this.moveDown();
-        }, 1000);
-        window.onkeydown = (e) => {
+        }, this.speed);
+        window.onkeyup = (e) => {
             this.inputKey(e);
         }
     }
@@ -251,12 +260,12 @@ export default class TetrisBlock {
             cell.rowIndexToDraw = cell.rowIndex + this.newDeltaRow;
             cell.columnIndexToDraw = cell.columnIndex + this.newDeltaColumn;
         }
-        this.tetrisPanel.checkMovable();    // needToDie, canMovable
+        this.tetrisPanel.checkMovable(this.blocks);    // needToDie, canMovable
         if (this.needToDie || (!this.canMovable && this.newDeltaRow == 1)) {
             clearInterval(this.handle);
-            $.c('새로운 블럭 생성');
+            //$.c('새로운 블럭 생성');
+            window.onkeyup = null;
             this.tetrisPanel.informIAmDead(this.newDeltaRow);
-            window.onkeydown = null;
             return;
         }
         if (this.canMovable) {
@@ -271,7 +280,7 @@ export default class TetrisBlock {
             cell.rowIndexToDraw = cell.rowIndex + this.newDeltaRow;
             cell.columnIndexToDraw = cell.columnIndex + this.newDeltaColumn;
         }
-        this.tetrisPanel.checkMovable();    // needToDie, canMovable
+        this.tetrisPanel.checkMovable(this.blocks);    // needToDie, canMovable
         if (this.canMovable) {
             this.makePanelDataWhenMoved();
         } else {
@@ -286,7 +295,7 @@ export default class TetrisBlock {
             cell.rowIndexToDraw = cell.rowIndex + this.newDeltaRow;
             cell.columnIndexToDraw = cell.columnIndex + this.newDeltaColumn;
         }
-        this.tetrisPanel.checkMovable();    // needToDie, canMovable
+        this.tetrisPanel.checkMovable(this.blocks);    // needToDie, canMovable
         if (this.canMovable) {
             this.makePanelDataWhenMoved();
         } else {
@@ -294,7 +303,22 @@ export default class TetrisBlock {
         }
     }
     rotate() {
-        $.c('rotate');
+        const newRotateIndex = this._getNextRotateIndex();
+        const newBlocks = this.makeTetrisCells(this.shapeIndex, newRotateIndex);
+        if (!newBlocks){ 
+            return;
+        }
+        for (let cell of newBlocks) {
+            cell.rowIndexToDraw = cell.rowIndex + this.newDeltaRow;
+            cell.columnIndexToDraw = cell.columnIndex + this.newDeltaColumn;
+        }
+        this.tetrisPanel.checkMovable(newBlocks);    // needToDie, canMovable
+        if (this.canMovable) {
+            this.tetrisPanel.clearBlocks(this.blocks);
+            this.blocks = newBlocks;
+            this.makePanelDataWhenMoved();
+            this.rotateIndex = newRotateIndex;
+        } 
     }
     _makeColor() {
         const colors = '0123456789abcdef';
