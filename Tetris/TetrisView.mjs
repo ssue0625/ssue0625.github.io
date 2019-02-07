@@ -3,7 +3,6 @@ export default class TetrisView {
     constructor(tetrisArea) {
         this.tetrisArea = tetrisArea;
     }
-
     render(data) {
         if (!(data instanceof TetrisData)) return;
         let rows = data.rowsNumber;

@@ -7,19 +7,19 @@ export default class TetrisBlock {
         // this.shape = [[{ row: -2, column: 0 }, { row: -2, column: 1 }],
         //              [{ row: -1, column: 0 }, { row: -1, column: 1 }]];
         this.shapes = [
-            [   // 정사각형
-                [   // 기본형, 1번째 모양
+            [ // 정사각형
+                [ // 기본형, 1번째 모양
                     [1, 1],
                     [1, 1]
                 ]
             ],
-            [   // ㄱ 자 모양
-                [   // 기본형, 1번째 모양
+            [ // ㄱ 자 모양
+                [ // 기본형, 1번째 모양
                     [1, 1, 0],
                     [0, 1, 0],
                     [0, 1, 0]
                 ],
-                [   // 첫번째 회전 모양
+                [ // 첫번째 회전 모양
                     [0, 0, 1],
                     [1, 1, 1],
                     [0, 0, 0]
@@ -35,13 +35,13 @@ export default class TetrisBlock {
                     [1, 0, 0]
                 ]
             ],
-            [   // 무슨 모양 
-                [   // 기본형, 1번째 모양
+            [ // ㄱ 자 반대 모양
+                [ // 기본형, 1번째 모양
                     [0, 1, 1],
                     [0, 1, 0],
                     [0, 1, 0]
                 ],
-                [   // 첫번째 회전 모양
+                [ // 첫번째 회전 모양
                     [0, 0, 0],
                     [1, 1, 1],
                     [0, 0, 1]
@@ -57,13 +57,13 @@ export default class TetrisBlock {
                     [0, 0, 0]
                 ]
             ],
-            [
-                [   // 기본형, 1번째 모양
+            [ // ㄹ 같은 모양
+                [ // 기본형, 1번째 모양
                     [1, 1, 0],
                     [0, 1, 1],
                     [0, 0, 0]
                 ],
-                [   // 첫번째 회전 모양
+                [ // 첫번째 회전 모양
                     [0, 0, 1],
                     [0, 1, 1],
                     [0, 1, 0]
@@ -79,13 +79,13 @@ export default class TetrisBlock {
                     [1, 0, 0]
                 ]
             ],
-            [
-                [   // 기본형, 1번째 모양
+            [ // ㄹ 같은 반대 모양
+                [ // 기본형, 1번째 모양
                     [0, 1, 1],
                     [1, 1, 0],
                     [0, 0, 0]
                 ],
-                [   // 첫번째 회전 모양
+                [ // 첫번째 회전 모양
                     [0, 1, 0],
                     [0, 1, 1],
                     [0, 0, 1]
@@ -101,13 +101,13 @@ export default class TetrisBlock {
                     [0, 1, 0]
                 ]
             ],
-            [
-                [   // 기본형, 1번째 모양
+            [ // ㅗ 모양
+                [ // 기본형, 1번째 모양
                     [0, 1, 0],
                     [1, 1, 1],
                     [0, 0, 0]
                 ],
-                [   // 첫번째 회전 모양
+                [ // 첫번째 회전 모양
                     [0, 1, 0],
                     [0, 1, 1],
                     [0, 1, 0]
@@ -123,14 +123,14 @@ export default class TetrisBlock {
                     [0, 1, 0]
                 ]
             ],
-            [
-                [   // 기본형, 1번째 모양
+            [ // ㅣ 모양
+                [ // 기본형, 1번째 모양
                     [0, 1, 0, 0],
                     [0, 1, 0, 0],
                     [0, 1, 0, 0],
                     [0, 1, 0, 0]
                 ],
-                [   // 첫번째 회전 모양
+                [ // 첫번째 회전 모양
                     [0, 0, 0, 0],
                     [1, 1, 1, 1],
                     [0, 0, 0, 0],
@@ -170,7 +170,7 @@ export default class TetrisBlock {
     _getNextRotateIndex() { // 새로운 Rotate Index를 만드는 방법!
         let shapeSize = this.shapes[this.shapeIndex].length;
         let newRotateIndex = this.rotateIndex + 1;
-        if (newRotateIndex == shapeSize) { 
+        if (newRotateIndex == shapeSize) {
             newRotateIndex = 0;
         }
         return newRotateIndex;
@@ -228,17 +228,25 @@ export default class TetrisBlock {
                 //$.c(blockRowIndex,blockColumnIndex, downable);
             }
         }
-        //$.c('끛');
+        //$.c('끝');
         return result;
     }
     inputKey(key) {
         //key가 뭐지? 상, 하, 좌, 우 화살표만 반응..
         //$.c('키', key);
         switch (key.code) {
-            case "ArrowLeft": this.moveLeft(); break;
-            case "ArrowRight": this.moveRight(); break;
-            case "ArrowDown": this.moveDown(); break;
-            case "ArrowUp": this.rotate(); break;
+            case "ArrowLeft":
+                this.moveLeft();
+                break;
+            case "ArrowRight":
+                this.moveRight();
+                break;
+            case "ArrowDown":
+                this.moveDown();
+                break;
+            case "ArrowUp":
+                this.rotate();
+                break;
         }
     }
     moveDownFirst() {
@@ -260,7 +268,7 @@ export default class TetrisBlock {
             cell.rowIndexToDraw = cell.rowIndex + this.newDeltaRow;
             cell.columnIndexToDraw = cell.columnIndex + this.newDeltaColumn;
         }
-        this.tetrisPanel.checkMovable(this.blocks);    // needToDie, canMovable
+        this.tetrisPanel.checkMovable(this.blocks); // needToDie, canMovable
         if (this.needToDie || (!this.canMovable && this.newDeltaRow == 1)) {
             clearInterval(this.handle);
             //$.c('새로운 블럭 생성');
@@ -280,7 +288,7 @@ export default class TetrisBlock {
             cell.rowIndexToDraw = cell.rowIndex + this.newDeltaRow;
             cell.columnIndexToDraw = cell.columnIndex + this.newDeltaColumn;
         }
-        this.tetrisPanel.checkMovable(this.blocks);    // needToDie, canMovable
+        this.tetrisPanel.checkMovable(this.blocks); // needToDie, canMovable
         if (this.canMovable) {
             this.makePanelDataWhenMoved();
         } else {
@@ -295,7 +303,7 @@ export default class TetrisBlock {
             cell.rowIndexToDraw = cell.rowIndex + this.newDeltaRow;
             cell.columnIndexToDraw = cell.columnIndex + this.newDeltaColumn;
         }
-        this.tetrisPanel.checkMovable(this.blocks);    // needToDie, canMovable
+        this.tetrisPanel.checkMovable(this.blocks); // needToDie, canMovable
         if (this.canMovable) {
             this.makePanelDataWhenMoved();
         } else {
@@ -305,20 +313,20 @@ export default class TetrisBlock {
     rotate() {
         const newRotateIndex = this._getNextRotateIndex();
         const newBlocks = this.makeTetrisCells(this.shapeIndex, newRotateIndex);
-        if (!newBlocks){ 
+        if (!newBlocks) {
             return;
         }
         for (let cell of newBlocks) {
             cell.rowIndexToDraw = cell.rowIndex + this.newDeltaRow;
             cell.columnIndexToDraw = cell.columnIndex + this.newDeltaColumn;
         }
-        this.tetrisPanel.checkMovable(newBlocks);    // needToDie, canMovable
+        this.tetrisPanel.checkMovable(newBlocks); // needToDie, canMovable
         if (this.canMovable) {
             this.tetrisPanel.clearBlocks(this.blocks);
             this.blocks = newBlocks;
             this.makePanelDataWhenMoved();
             this.rotateIndex = newRotateIndex;
-        } 
+        }
     }
     _makeColor() {
         const colors = '0123456789abcdef';
@@ -326,11 +334,18 @@ export default class TetrisBlock {
         for (let i = 0; i < 6; i++) {
             ret += colors.charAt(Math.floor(Math.random() * 16));
         }
+        // 패널의 배경색과 같은 블럭은 만들면 안된다
+        // 1.블럭에 색을 만들 때 블럭의 색이 패널의 배경색과 같다면
+        // 만들지말고 돌아가라
+        // 2.만들어진 블럭들 중에 배경색과 같은 블럭이 있는지 보고 있으면 삭제한다.
+        if (ret == this.tetrisPanel.backgroundColor) {
+            $.c('TetrisBlock._makeColor', ret, this.TetrisBlock.color);
+            return;
+        }
         return ret;
     }
     getMovedBlocks() {
         // $.c('getMovedBlocks 들어옴');
-
         const result = [];
         //$.c(result.length);
         // 지워야할 위치
@@ -345,7 +360,6 @@ export default class TetrisBlock {
                 });
             }
         }
-
         result.push(line);
         // 변경된 위치
         //$.c(result.length);
@@ -369,5 +383,4 @@ export default class TetrisBlock {
         ///$.c(this.deltaRow, this.deltaColumn);
         return result;
     }
-
 }

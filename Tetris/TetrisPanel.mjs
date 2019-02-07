@@ -19,13 +19,16 @@ export default class TetrisPanel {
     clearCell(row, column) {
         this.panel[row][column] = this.backgroundColor;
     }
-
     informIAmDead(row) {
         this.checkLineDeletable();
-        if (row != 1) {
+        // 원래 : row 가 1이 아니면 새 블럭을 만든다.
+        // 나의 생각 : 블럭을 만들 때 배경색과 같은 블럭을 만들면 안되기 때문에
+        // 조건에 배경색과 다르다라는 것을 추가한다.
+        if (row != 1 && this.blocks != this.backgroundColor) {
             //$.c(row);
             this.tetrisBlock = new TetrisBlock(this, this.changePanelBackground.bind(this));
         }
+        $.c('TetrisPanel.inforIAmDead', this.tetrisBlock.color);
     }
     checkLineDeletable() {
         for (let rowIndexToCheck = this.tetrisRows - 1; rowIndexToCheck >= 0; rowIndexToCheck--) {
@@ -62,7 +65,7 @@ export default class TetrisPanel {
     }
     _isEmpty(row, column) {
         //$.c('empty',row,column, this.panel[row][column]);
-        if (row < 0 ||  row >= this.panel.tetrisRows || column < 0 || column >= this.panel.tetrisColumns) {
+        if (row < 0 || row >= this.panel.tetrisRows || column < 0 || column >= this.panel.tetrisColumns) {
             return false;
         }
         if (this.panel[row][column] != this.backgroundColor) {
@@ -73,7 +76,7 @@ export default class TetrisPanel {
             return true;
         }
     }
-    checkMovable(blocks) {// needToDie, canMovable
+    checkMovable(blocks) { // needToDie, canMovable
         this.tetrisBlock.needToDie = false;
         this.tetrisBlock.canMovable = true;
         // TetrisBlock의 Blocks가 움직일 수 있는지를 조사
@@ -93,8 +96,8 @@ export default class TetrisPanel {
             }
             if (cell.rowIndexToDraw >= 0) {
                 if (!this._isEmpty(cell.rowIndexToDraw, cell.columnIndexToDraw)) {
-                this.tetrisBlock.canMovable = false;
-                break;
+                    this.tetrisBlock.canMovable = false;
+                    break;
                 }
             }
         }
