@@ -1,6 +1,6 @@
 import PanelCell from './PanelCell.mjs';
 export default class TetrisBlock {
-    constructor(tetrisPanel, makePanelData) {
+    constructor(tetrisPanel) {
         this.tetrisPanel = tetrisPanel;
         this.speed = 300;
         this.color = this._makeColor();
@@ -160,7 +160,7 @@ export default class TetrisBlock {
         this.deltaColumn = 4;
         this.newDeltaRow = this.deltaRow;
         this.newDeltaColumn = this.deltaColumn;
-        this.makePanelDataWhenMoved = makePanelData;
+        this.makePanelDataWhenMoved = this.tetrisPanel.changePanelBackground.bind(this.tetrisPanel);
         //this.blocks = new TetrisCells(this.shapeIndex, this.rotateIndex);
         //this.handle;
         setTimeout(() => {
@@ -189,47 +189,6 @@ export default class TetrisBlock {
             }
         }
         return cells;
-    }
-    canBlockDown() {
-        for (let cell of this.blocks) {
-            if (cell.isDrawn) {
-                this.tetrisPanel.clearCell(cell.rowIndexDrawn, cell.columnIndexDrawn);
-            }
-        }
-        let result = true;
-        let blockRowIndex;
-        let blockColumnIndex;
-        const isMovable = this.tetrisPanel.isEmpty.bind(this.tetrisPanel);
-        //$.c('시작');
-        for (let cell of this.blocks) {
-            blockRowIndex = cell.rowIndex + this.newDeltaRow;
-            blockColumnIndex = cell.columnIndex + this.newDeltaColumn;
-            //$.c('newDelta ' + this.newDeltaRow);
-            //$.c('canDown: ', blockRowIndex, blockColumnIndex, this.tetrisPanel.tetrisRows);
-            // 이동 가능한가? 죽어야 하는가?
-            if (blockRowIndex >= 0 &&
-                blockRowIndex < this.tetrisPanel.tetrisRows) {
-                //$.c('if');
-                const downable = isMovable(blockRowIndex, blockColumnIndex);
-                if (downable) {
-                    //$.d(cell);
-                    // 그릴 수 있다고 표시한다.
-                    cell.canDraw = true;
-                    cell.rowIndexToDraw = blockRowIndex;
-                    cell.columnIndexToDraw = blockColumnIndex;
-                } else {
-                    //$.c('죽는 곳');
-                    //$.c('canDown: ', blockRowIndex, blockColumnIndex, this.tetrisPanel.tetrisRows);
-                    cell.canDraw = false;
-                    result = false;
-                    break;
-                    // 죽인다.
-                }
-                //$.c(blockRowIndex,blockColumnIndex, downable);
-            }
-        }
-        //$.c('끝');
-        return result;
     }
     inputKey(key) {
         //key가 뭐지? 상, 하, 좌, 우 화살표만 반응..
@@ -369,44 +328,5 @@ export default class TetrisBlock {
         } while (ret == this.tetrisPanel.backgroundColor)   // 반환색을 패널의 배경색과 비교한다. 같으면 달라질 때까지 무한 반복 한다.
         // 두 값이 다르면 비로소 ret를 반환한다.
         return ret;
-    }
-    getMovedBlocks() {
-        // $.c('getMovedBlocks 들어옴');
-        const result = [];
-        //$.c(result.length);
-        // 지워야할 위치
-        let line = [];
-        for (let i = 0; i < this.shape.length; i++) {
-            for (let j = 0; j < this.shape[0].length; j++) {
-                if (this.shape[i][j].row + this.deltaRow < 0 ||
-                    this.shape[i][j].column + this.deltaColumn < 0) continue;
-                line.push({
-                    row: this.shape[i][j].row + this.deltaRow,
-                    column: this.shape[i][j].column + this.deltaColumn
-                });
-            }
-        }
-        result.push(line);
-        // 변경된 위치
-        //$.c(result.length);
-        line = [];
-        // $.c('getMovedBlocks 변경됨');
-        for (let i = 0; i < this.shape.length; i++) {
-            for (let j = 0; j < this.shape[0].length; j++) {
-                if (this.shape[i][j].row + this.newDeltaRow < 0 ||
-                    this.shape[i][j].column + this.newDeltaColumn < 0) continue;
-                line.push({
-                    row: this.shape[i][j].row + this.newDeltaRow,
-                    column: this.shape[i][j].column + this.newDeltaColumn
-                });
-            }
-        }
-        result.push(line);
-        //$.c(result.length);
-        //$.c('getMovedBlocks 나감');
-        this.deltaRow = this.newDeltaRow;
-        this.deltaColumn = this.newDeltaColumn;
-        ///$.c(this.deltaRow, this.deltaColumn);
-        return result;
     }
 }

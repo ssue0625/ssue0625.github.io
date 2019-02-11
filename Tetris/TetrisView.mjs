@@ -19,25 +19,28 @@ export default class TetrisView {
                 // 행과 열을 가지고 td를 찾는다.
                 td = document.querySelector('#' + this.tetrisArea + ' .tetrisCell' + i + j);
                 td.style.backgroundColor = data.getCellColor(i, j);
+                // if (data.getCellColor(i, j) == '#ffffff') {
+                //     $.c(i, j);
+                // }
             }
         }
     }
-    makePanel(rows, columns) {
+    makePanel(rowsLength, columnsLength) {
         const tetrisPanelHeight = Math.floor(document.getElementById(this.tetrisArea)
-            .getBoundingClientRect().height);
+            .getBoundingClientRect().height);   // height 이외에 참조할 값이 없다. <= flex-direction
         const area = document.getElementById(this.tetrisArea);
         const table = document.createElement('table');
         area.appendChild(table);
         table.style.height = tetrisPanelHeight + 'px';
-        table.style.width = tetrisPanelHeight + 'px';
+        table.style.width = Math.floor(tetrisPanelHeight / rowsLength * columnsLength) + 'px';
         table.style.borderSpacing = '0px';
         const tbody = document.createElement('tbody');
         table.appendChild(tbody);
         let tr;
         let td;
-        for (let i = 0; i < rows; i++) {
+        for (let i = 0; i < rowsLength; i++) {
             tr = document.createElement('tr');
-            for (let j = 0; j < columns; j++) {
+            for (let j = 0; j < columnsLength; j++) {
                 td = document.createElement('td');
                 td.className = 'tetrisCell' + i + j;
                 tr.appendChild(td);

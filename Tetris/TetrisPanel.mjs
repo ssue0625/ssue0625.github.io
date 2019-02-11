@@ -5,8 +5,8 @@ export default class TetrisPanel {
     constructor(tetrisRows, tetrisColumns) {
         this.tetrisRows = tetrisRows;
         this.tetrisColumns = tetrisColumns;
-        this.backgroundColor = '#c8c8c8';
-        this.tetrisBlock = new TetrisBlock(this, this.changePanelBackground.bind(this));
+        this.backgroundColor = '#ffffff';//'#c8c8c8';
+        this.tetrisBlock = new TetrisBlock(this);
         this.panel = [];
         for (let row = 0; row < tetrisRows; row++) {
             let rows = [];
@@ -20,7 +20,10 @@ export default class TetrisPanel {
         this.panel[row][column] = this.backgroundColor;
     }
     informIAmDead(row) {
-        this.checkLineDeletable();
+        if (this.checkLineDeletable()) {
+            const data = new TetrisData(this.panel);
+            this.sendDataToViewWhenReady(data);
+        }
         // 원래 : row 가 1이 아니면 새 블럭을 만든다.
         // 나의 생각 : 블럭을 만들 때 배경색과 같은 블럭을 만들면 안되기 때문에
         // 조건에 배경색과 다르다라는 것을 추가한다.
@@ -42,6 +45,7 @@ export default class TetrisPanel {
         //$.c('TetrisPanel.inforIAmDead', this.tetrisBlock.color);
     }
     checkLineDeletable() {
+        let result = false;
         for (let rowIndexToCheck = this.tetrisRows - 1; rowIndexToCheck >= 0; rowIndexToCheck--) {
             const rowToCheck = this.panel[rowIndexToCheck]; // 체크할 패널 행
             let needlineToDelete = true;
@@ -57,11 +61,13 @@ export default class TetrisPanel {
             }
             if (needlineToDelete) {
                 this.deleteLine(rowIndexToCheck);
+                result = true;
             }
         }
+        return result;
     }
     deleteLine(lineToDeleteIndex) {
-        $.c(lineToDeleteIndex);
+        //$.c(lineToDeleteIndex);
         let row = this.panel[lineToDeleteIndex];
         for (let cellToCheck = 0; cellToCheck < row.length; cellToCheck++) {
             row[cellToCheck] = this.backgroundColor;
