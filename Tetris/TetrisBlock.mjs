@@ -161,8 +161,6 @@ export default class TetrisBlock {
         this.newDeltaRow = this.deltaRow;
         this.newDeltaColumn = this.deltaColumn;
         this.makePanelDataWhenMoved = this.tetrisPanel.changePanelBackground.bind(this.tetrisPanel);
-        //this.blocks = new TetrisCells(this.shapeIndex, this.rotateIndex);
-        //this.handle;
         setTimeout(() => {
             this.moveDownFirst();
         }, 0);
@@ -288,31 +286,6 @@ export default class TetrisBlock {
         }
     }
     _makeColor() {
-        // const colors = '0123456789abcdef';
-        // let ret = '#';
-        // for (let i = 0; i < 6; i++) {
-        //     ret += colors.charAt(Math.floor(Math.random() * 16));
-        // }
-        // 패널의 배경색과 같은 블럭은 만들면 안된다
-        // 1.블럭에 색을 만들 때 블럭의 색이 패널의 배경색과 같다면
-        // 만들지말고 돌아가라
-        // 2.만들어진 블럭들 중에 배경색과 같은 블럭이 있는지 보고 있으면 삭제한다.
-        // 아빠의 의견
-        // 1. 배경색과 같으면, 배경색과 다른 색을 다시 만들어야 한다.
-        //   아래 경우는,, 배경색과 같을 경우, 반환값이 없이 돌아가니,
-        //   새로 만들어진 블럭의 색깔은 undefined가 된다.
-        // if (ret == this.tetrisPanel.backgroundColor) {
-        //     $.c('TetrisBlock._makeColor', ret, this.TetrisBlock.color);
-        //     return; // undefined 반환 효과!
-        // }
-        // return ret;
-        // 2. 어떻게 해결해야 하나?
-        // 일단, 들어와서 블럭의 색을 만들고,, 이 색이 배경색과 같으면,,
-        // 다시 또 만들게 해야 한다.. 그리고 배경색과 또 비교하고,,
-        // 그럼, 도대체 언제까지  이 짓을 반복해야 하나?
-        // 블럭의 색과 배경색이 다를 때까지 이 짓을 반복해야 한다.
-        // 이런 요구 사항을 해결하기 위해, 어떤 구조를 사용해야 하나??
-        // 아래와 같은 구조(될 때까지 무한 반복 구조)를 사용해야 한다.
         const colors = '0123456789abcdef';
         let ret;
         do {
@@ -325,7 +298,7 @@ export default class TetrisBlock {
             if (ret == this.tetrisPanel.backgroundColor) {
                 alert('패널 배경색과 같은 색깔을 만들었네');
             }
-        } while (ret == this.tetrisPanel.backgroundColor)   // 반환색을 패널의 배경색과 비교한다. 같으면 달라질 때까지 무한 반복 한다.
+        } while (ret == this.tetrisPanel.backgroundColor) // 반환색을 패널의 배경색과 비교한다. 같으면 달라질 때까지 무한 반복 한다.
         // 두 값이 다르면 비로소 ret를 반환한다.
         return ret;
     }

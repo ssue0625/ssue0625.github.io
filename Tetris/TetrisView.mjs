@@ -12,22 +12,17 @@ export default class TetrisView {
         }
         //$.c(data);
         let td;
-        //let area = document.getElementById(this.tetrisArea);
         for (let i = 0; i < rows; i++) {
             for (let j = 0; j < columns; j++) {
-                //console.log(data[i][j]);
                 // 행과 열을 가지고 td를 찾는다.
                 td = document.querySelector('#' + this.tetrisArea + ' .tetrisCell' + i + j);
                 td.style.backgroundColor = data.getCellColor(i, j);
-                // if (data.getCellColor(i, j) == '#ffffff') {
-                //     $.c(i, j);
-                // }
             }
         }
     }
     makePanel(rowsLength, columnsLength) {
         const tetrisPanelHeight = Math.floor(document.getElementById(this.tetrisArea)
-            .getBoundingClientRect().height);   // height 이외에 참조할 값이 없다. <= flex-direction
+            .getBoundingClientRect().height); // height 이외에 참조할 값이 없다. <= flex-direction
         const area = document.getElementById(this.tetrisArea);
         const table = document.createElement('table');
         area.appendChild(table);

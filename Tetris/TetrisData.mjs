@@ -7,14 +7,12 @@ export default class TetrisData {
         for (let i = 0; i < panelData.length; i++) {
             row = [];
             for (let j = 0; j < panelData[0].length; j++) {
-                //this._panel.push(panelData[i][j]);
                 row.push(panelData[i][j]);
             }
             this._panel.push(row);
         }
     }
     getCellColor(row, column) {
-        //$.c(this._panel[row][column]);
         return this._panel[row][column];
     }
 }
