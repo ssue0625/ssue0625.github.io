@@ -61,6 +61,7 @@ export default class TetrisPanel {
             }
             if (needlineToDelete) {
                 this.deleteLine(rowIndexToCheck);
+                rowIndexToCheck++;  // 현재 라인을 다시 체크 <- 바로 위라인이었다.
                 result = true;
             }
         }
@@ -72,6 +73,7 @@ export default class TetrisPanel {
         for (let cellToCheck = 0; cellToCheck < row.length; cellToCheck++) {
             row[cellToCheck] = this.backgroundColor;
         }
+        // 위의 라인 한 칸씩 내리기.
         let rowToMove;
         for (let lineToMove = lineToDeleteIndex - 1; lineToMove >= 0; lineToMove--) {
             rowToMove = this.panel[lineToMove];
