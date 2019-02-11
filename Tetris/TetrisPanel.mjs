@@ -28,15 +28,18 @@ export default class TetrisPanel {
         // 1. this.blocks 는 어디에 있는가? 있다면, 데이터 형이 무엇이기에 this.backgroundColor와 비교하는가? 
         //    이 넘들은 서로 데이터 형조차 다른 넘들 아닌가?
         // 2. this.blocks != this.backgroundColor 의 값은 무엇인가? 항상 True다. 그 이유는?
-        $.c('informIAmDead 비교', this.blocks != this.backgroundColor);
-        if (row != 1 && this.blocks != this.backgroundColor) {
+        //$.c('informIAmDead 비교', this.blocks != this.backgroundColor);
+        if (row != 1) {
             //$.c(row);
             this.tetrisBlock = new TetrisBlock(this, this.changePanelBackground.bind(this));
             // 3. 새로 만든 tetrisBlock의 색깔을 패널의 배경색과 비교해 보고,,
             // 두 넘의 값이 같으면,, TetrisBlock의 색을 바꾸던지, 새로 만들어야 하는데,,
             // 어떤 조치를 취했나??
+            // do {
+            //     // 새로 만든다
+            // } while (this.tetrisBlock.color == this.backgroundColor)
         }
-        $.c('TetrisPanel.inforIAmDead', this.tetrisBlock.color);
+        //$.c('TetrisPanel.inforIAmDead', this.tetrisBlock.color);
     }
     checkLineDeletable() {
         for (let rowIndexToCheck = this.tetrisRows - 1; rowIndexToCheck >= 0; rowIndexToCheck--) {
