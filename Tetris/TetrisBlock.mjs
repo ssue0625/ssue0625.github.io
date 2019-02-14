@@ -161,6 +161,8 @@ export default class TetrisBlock {
         this.newDeltaRow = this.deltaRow;
         this.newDeltaColumn = this.deltaColumn;
         this.makePanelDataWhenMoved = this.tetrisPanel.changePanelBackground.bind(this.tetrisPanel);
+        this.informBlockCreated = this.tetrisPanel.informBlockCreated.bind(this.tetrisPanel);
+        //this.blocks
         setTimeout(() => {
             this.moveDownFirst();
         }, 0);
@@ -174,6 +176,7 @@ export default class TetrisBlock {
         return newRotateIndex;
     }
     makeTetrisCells(shapeIndex, rotateIndex) {
+        //$.c(this.shapes);
         const cells = [];
         const rowSize = this.shapes[shapeIndex][rotateIndex].length;
         const columnSize = this.shapes[shapeIndex][rotateIndex][0].length;
@@ -213,6 +216,8 @@ export default class TetrisBlock {
         this.handle = setInterval(() => {
             this.moveDown();
         }, this.speed);
+        this.informBlockCreated();
+        return;
         window.onkeyup = (e) => {
             this.inputKey(e);
         }
@@ -229,7 +234,7 @@ export default class TetrisBlock {
         if (this.needToDie || (!this.canMovable && this.newDeltaRow == 1)) {
             clearInterval(this.handle);
             //$.c('새로운 블럭 생성');
-            window.onkeyup = null;
+            //window.onkeyup = null;
             this.tetrisPanel.informIAmDead(this.newDeltaRow);
             return;
         }
@@ -238,6 +243,7 @@ export default class TetrisBlock {
         }
     }
     moveLeft() {
+        $.c('dead');
         // Left 키가 눌렸으므로, 칼럼을 좌측으로.
         this.newDeltaColumn--;
         // 테트리스 블럭의 각각의 셀들의 새로운 위치를 정해준 후, 움직일 수 있는지 체크

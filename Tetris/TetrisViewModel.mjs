@@ -4,13 +4,13 @@ export default class TetrisViewModel {
   constructor(tetrisScreen) {
     this.tetrisRows = 15;   // 행, 렬 변경할 것!
     this.tetrisColumns = 11;
-    this.tetrisModel = new TetrisModel(this.tetrisRows, this.tetrisColumns);
     this.tetrisView = new TetrisView(tetrisScreen);
+    this.tetrisModel = new TetrisModel(this.tetrisRows, this.tetrisColumns);
   }
-  renderData(data) {
-    this.tetrisView.render(data);
+  renderData(panelData) {
+    this.tetrisView.render(panelData);
   }
   run() {
-    this.tetrisModel.getData(this.renderData.bind(this));
+    this.tetrisModel.getPanelData(this.renderData.bind(this));
   }
 }

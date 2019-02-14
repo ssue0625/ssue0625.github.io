@@ -1,10 +1,16 @@
 import TetrisPanel from './TetrisPanel.mjs';
+import TetrisPlayer from './TetrisPlayer.mjs';
 export default class TetrisModel {
     constructor(rows, columns) {
-        this.tetrisPanel = new TetrisPanel(rows, columns);
-        //this.tetrisPanel.makeDefaultTetrisPanel();
+        this.tetrisPanel = new TetrisPanel(this, rows, columns);
+        this.tetrisPlayer = new TetrisPlayer(this.tetrisPanel);
     }
-    getData(func) {
+    informBlockCreated() {
+
+        const func = this.tetrisPlayer.doWhenNewBlockCreated.bind(this.tetrisPlayer);
+        func();
+    }
+    getPanelData(func) {
         this.tetrisPanel.getData(func);
     }
 }

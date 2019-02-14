@@ -3,10 +3,10 @@ export default class TetrisView {
     constructor(tetrisArea) {
         this.tetrisArea = tetrisArea;
     }
-    render(data) {
-        if (!(data instanceof TetrisData)) return;
-        let rows = data.rowsNumber;
-        let columns = data.columnsNumber;
+    render(panelData) {
+        if (!(panelData instanceof TetrisData)) return;
+        let rows = panelData.rowsNumber;
+        let columns = panelData.columnsNumber;
         if (!this.hasPanel) {
             this.makePanel(rows, columns);
         }
@@ -16,7 +16,7 @@ export default class TetrisView {
             for (let j = 0; j < columns; j++) {
                 // 행과 열을 가지고 td를 찾는다.
                 td = document.querySelector('#' + this.tetrisArea + ' .tetrisCell' + i + j);
-                td.style.backgroundColor = data.getCellColor(i, j);
+                td.style.backgroundColor = panelData.getCellColor(i, j);
             }
         }
     }
