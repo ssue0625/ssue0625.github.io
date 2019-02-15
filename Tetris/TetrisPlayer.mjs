@@ -42,7 +42,11 @@ export default class TetrisPlayer {
             case "ArrowDown":
                 if (this.canMoveDown()) {
                     this.moveDown();
+                    setTimeout(() => {
+                        this.inputKey(key);
+                    }, 100);
                 } else {
+                    //clearTimeout(this.inputKeyHandle);
                     this.tetrisPanel.informIAmDead(this.tetrisBlock.newDeltaRow + 1);
                 }
                 break;
@@ -60,7 +64,7 @@ export default class TetrisPlayer {
             cell.rowIndexToDraw = cell.rowIndex + newDeltaRow;
             cell.columnIndexToDraw = cell.columnIndex + this.tetrisBlock.newDeltaColumn;
         }
-        return this.tetrisPanel.canMovable(this.blocks); 
+        return this.tetrisPanel.canMovable(this.blocks);
     }
     moveDown() {
         // Down 키가 눌렸으므로, 행을 하나 내린다.
@@ -74,7 +78,7 @@ export default class TetrisPlayer {
             cell.rowIndexToDraw = cell.rowIndex + this.tetrisBlock.newDeltaRow;
             cell.columnIndexToDraw = cell.columnIndex + newColumn;
         }
-        return this.tetrisPanel.canMovable(this.blocks); 
+        return this.tetrisPanel.canMovable(this.blocks);
     }
     moveLeft() {
         this.tetrisBlock.newDeltaColumn--;
@@ -87,7 +91,7 @@ export default class TetrisPlayer {
             cell.rowIndexToDraw = cell.rowIndex + this.tetrisBlock.newDeltaRow;
             cell.columnIndexToDraw = cell.columnIndex + newColumn;
         }
-        return this.tetrisPanel.canMovable(this.blocks); 
+        return this.tetrisPanel.canMovable(this.blocks);
     }
     moveRight() {
         this.tetrisBlock.newDeltaColumn++;

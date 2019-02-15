@@ -201,14 +201,13 @@ export default class TetrisBlock {
         }, this.speed);
     }
     autoMoveDown() {
-        // Down 키가 눌렸으므로, 행을 하나 내린다.
         const newDeltaRow = this.newDeltaRow + 1;
         // 테트리스 블럭의 각각의 셀들의 새로운 위치를 정해준 후, 움직일 수 있는지 체크
         for (let cell of this.blocks) {
             cell.rowIndexToDraw = cell.rowIndex + newDeltaRow;
             cell.columnIndexToDraw = cell.columnIndex + this.newDeltaColumn;
         }
-        if (!this.tetrisPanel.canMovable(this.blocks)) {
+        if (!this.tetrisPanel.canDownable(this.blocks)) {
             this.tetrisPanel.informIAmDead(newDeltaRow);
             return;
         }

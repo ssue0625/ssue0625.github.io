@@ -75,20 +75,18 @@ export default class TetrisPanel {
     }
     _isEmpty(row, column) {
         //$.c('empty',row,column, this.panel[row][column]);
-        if (row < 0 || row >= this.panel.tetrisRows || column < 0 || column >= this.panel.tetrisColumns) {
+        if (row < 0 || row >= this.tetrisRows || column < 0 || column >= this.tetrisColumns) {
             return false;
         }
+        // $.c('isEmpty',this.panel.length, this.tetrisRows, row, column);
         if (this.panel[row][column] != this.backgroundColor) {
-            //$.c(false, row, column);
             return false;
         } else {
             //$.c(true, row, column);
             return true;
         }
     }
-    
-    canMovable(blocks) { // needToDie, canMovable
-        // $.c('panelCheck');
+    canDownable(blocks) {
         let result = true;
         // TetrisBlock의 Blocks가 움직일 수 있는지를 조사
         // Blocks는 Cell의 집합 : 기존 위치 && 새로운 위치
@@ -109,6 +107,33 @@ export default class TetrisPanel {
                     result = false;
                     break;
                 }
+            }
+        }
+        //$.c('기존 그림 그리기 직전');
+        // 기존의 그림을 그려 놓는다.
+        for (let cell of this.tetrisBlock.blocks) {
+            if (cell.rowIndexDrawn != -1 && cell.columnIndexDrawn != -1) {
+                this.panel[cell.rowIndexDrawn][cell.columnIndexDrawn] = this.tetrisBlock.color;
+            }
+        }
+        //$.c(this.tetrisBlock.canMovable,this.tetrisBlock.needToDie);
+        return result;
+    }
+    canMovable(blocks) { 
+        let result = true;
+        // TetrisBlock의 Blocks가 움직일 수 있는지를 조사
+        // Blocks는 Cell의 집합 : 기존 위치 && 새로운 위치
+        // 새로 그릴 위치 확인을 위해 패널에서 기존에 그려진 블럭을 지운다 
+        for (let cell of this.tetrisBlock.blocks) {
+            if (cell.rowIndexDrawn != -1 && cell.columnIndexDrawn != -1) {
+                this.panel[cell.rowIndexDrawn][cell.columnIndexDrawn] = this.backgroundColor;
+            }
+        }
+        // 이동 가능성을 체크한 후, 가능 여부 저장
+        for (let cell of blocks) {
+            if (!this._isEmpty(cell.rowIndexToDraw, cell.columnIndexToDraw)) {
+                result = false;
+                break;
             }
         }
         //$.c('기존 그림 그리기 직전');
