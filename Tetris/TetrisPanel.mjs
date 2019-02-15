@@ -87,11 +87,9 @@ export default class TetrisPanel {
         }
     }
     
-    checkMovable(blocks) { // needToDie, canMovable
+    canMovable(blocks) { // needToDie, canMovable
         // $.c('panelCheck');
         let result = true;
-        this.tetrisBlock.needToDie = false;
-        this.tetrisBlock.canMovable = true;
         // TetrisBlock의 Blocks가 움직일 수 있는지를 조사
         // Blocks는 Cell의 집합 : 기존 위치 && 새로운 위치
         // 새로 그릴 위치 확인을 위해 패널에서 기존에 그려진 블럭을 지운다 
@@ -103,14 +101,11 @@ export default class TetrisPanel {
         // 이동 가능성을 체크한 후, 가능 여부 저장
         for (let cell of blocks) {
             if (cell.rowIndexToDraw >= this.tetrisRows) {
-                this.tetrisBlock.canMovable = false;
-                this.tetrisBlock.needToDie = true;
                 result = false;
                 break;
             }
             if (cell.rowIndexToDraw >= 0) {
                 if (!this._isEmpty(cell.rowIndexToDraw, cell.columnIndexToDraw)) {
-                    this.tetrisBlock.canMovable = false;
                     result = false;
                     break;
                 }

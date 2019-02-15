@@ -2,7 +2,7 @@ import PanelCell from './PanelCell.mjs';
 export default class TetrisBlock {
     constructor(tetrisPanel) {
         this.tetrisPanel = tetrisPanel;
-        this.speed = 300;
+        this.speed = 1000;
         this.color = this._makeColor();
         // this.shape = [[{ row: -2, column: 0 }, { row: -2, column: 1 }],
         //              [{ row: -1, column: 0 }, { row: -1, column: 1 }]];
@@ -191,105 +191,32 @@ export default class TetrisBlock {
         }
         return cells;
     }
-    inputKey(key) {
-        //key가 뭐지? 상, 하, 좌, 우 화살표만 반응..
-        //$.c('키', key);
-        switch (key.code) {
-            case "ArrowLeft":
-                this.moveLeft();
-                break;
-            case "ArrowRight":
-                this.moveRight();
-                break;
-            case "ArrowDown":
-                this.moveDown();
-                break;
-            case "ArrowUp":
-                this.rotate();
-                break;
-        }
-    }
     moveDownFirst() {
         if (!this.blocks) {
             this.blocks = this.makeTetrisCells(this.shapeIndex, this.rotateIndex);
         }
-        this.handle = setInterval(() => {
-            this.moveDown();
-        }, this.speed);
         this.informBlockCreated();
-        return;
-        window.onkeyup = (e) => {
-            this.inputKey(e);
-        }
+        setTimeout(() => {
+            this.autoMoveDown();
+        }, this.speed);
     }
-    moveDown() {
+    autoMoveDown() {
         // Down 키가 눌렸으므로, 행을 하나 내린다.
+        const newDeltaRow = this.newDeltaRow + 1;
+        // 테트리스 블럭의 각각의 셀들의 새로운 위치를 정해준 후, 움직일 수 있는지 체크
+        for (let cell of this.blocks) {
+            cell.rowIndexToDraw = cell.rowIndex + newDeltaRow;
+            cell.columnIndexToDraw = cell.columnIndex + this.newDeltaColumn;
+        }
+        if (!this.tetrisPanel.canMovable(this.blocks)) {
+            this.tetrisPanel.informIAmDead(newDeltaRow);
+            return;
+        }
         this.newDeltaRow++;
-        // 테트리스 블럭의 각각의 셀들의 새로운 위치를 정해준 후, 움직일 수 있는지 체크
-        for (let cell of this.blocks) {
-            cell.rowIndexToDraw = cell.rowIndex + this.newDeltaRow;
-            cell.columnIndexToDraw = cell.columnIndex + this.newDeltaColumn;
-        }
-        this.tetrisPanel.checkMovable(this.blocks); // needToDie, canMovable
-        if (this.needToDie || (!this.canMovable && this.newDeltaRow == 1)) {
-            clearInterval(this.handle);
-            //$.c('새로운 블럭 생성');
-            //window.onkeyup = null;
-            this.tetrisPanel.informIAmDead(this.newDeltaRow);
-            return;
-        }
-        if (this.canMovable) {
-            this.makePanelDataWhenMoved();
-        }
-    }
-    moveLeft() {
-        $.c('dead');
-        // Left 키가 눌렸으므로, 칼럼을 좌측으로.
-        this.newDeltaColumn--;
-        // 테트리스 블럭의 각각의 셀들의 새로운 위치를 정해준 후, 움직일 수 있는지 체크
-        for (let cell of this.blocks) {
-            cell.rowIndexToDraw = cell.rowIndex + this.newDeltaRow;
-            cell.columnIndexToDraw = cell.columnIndex + this.newDeltaColumn;
-        }
-        this.tetrisPanel.checkMovable(this.blocks); // needToDie, canMovable
-        if (this.canMovable) {
-            this.makePanelDataWhenMoved();
-        } else {
-            this.newDeltaColumn++;
-        }
-    }
-    moveRight() {
-        // Right 키가 눌렸으므로, 칼럼을 우측으로.
-        this.newDeltaColumn++;
-        // 테트리스 블럭의 각각의 셀들의 새로운 위치를 정해준 후, 움직일 수 있는지 체크
-        for (let cell of this.blocks) {
-            cell.rowIndexToDraw = cell.rowIndex + this.newDeltaRow;
-            cell.columnIndexToDraw = cell.columnIndex + this.newDeltaColumn;
-        }
-        this.tetrisPanel.checkMovable(this.blocks); // needToDie, canMovable
-        if (this.canMovable) {
-            this.makePanelDataWhenMoved();
-        } else {
-            this.newDeltaColumn--;
-        }
-    }
-    rotate() {
-        const newRotateIndex = this._getNextRotateIndex();
-        const newBlocks = this.makeTetrisCells(this.shapeIndex, newRotateIndex);
-        if (!newBlocks) {
-            return;
-        }
-        for (let cell of newBlocks) {
-            cell.rowIndexToDraw = cell.rowIndex + this.newDeltaRow;
-            cell.columnIndexToDraw = cell.columnIndex + this.newDeltaColumn;
-        }
-        this.tetrisPanel.checkMovable(newBlocks); // needToDie, canMovable
-        if (this.canMovable) {
-            this.tetrisPanel.clearBlocks(this.blocks);
-            this.blocks = newBlocks;
-            this.makePanelDataWhenMoved();
-            this.rotateIndex = newRotateIndex;
-        }
+        this.makePanelDataWhenMoved();
+        setTimeout(() => {
+            this.autoMoveDown();
+        }, this.speed);
     }
     _makeColor() {
         const colors = '0123456789abcdef';
