@@ -119,7 +119,7 @@ export default class TetrisPanel {
         //$.c(this.tetrisBlock.canMovable,this.tetrisBlock.needToDie);
         return result;
     }
-    canMovable(blocks) { 
+    canMovable(blocks) {
         let result = true;
         // TetrisBlock의 Blocks가 움직일 수 있는지를 조사
         // Blocks는 Cell의 집합 : 기존 위치 && 새로운 위치

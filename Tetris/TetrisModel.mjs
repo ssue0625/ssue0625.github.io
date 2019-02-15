@@ -6,7 +6,6 @@ export default class TetrisModel {
         this.tetrisPlayer = new TetrisPlayer(this.tetrisPanel);
     }
     informBlockCreated() {
-
         const func = this.tetrisPlayer.doWhenNewBlockCreated.bind(this.tetrisPlayer);
         func();
     }
