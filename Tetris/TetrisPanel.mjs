@@ -6,7 +6,7 @@ export default class TetrisPanel {
         this.tetrisModel = tetrisModel;
         this.tetrisRows = tetrisRows;
         this.tetrisColumns = tetrisColumns;
-        this.backgroundColor = 'black'; //'#c8c8c8';
+        this.backgroundColor = '#c8c8c8';
         this.tetrisBlock = new TetrisBlock(this);
         this.panel = [];
         for (let row = 0; row < tetrisRows; row++) {
@@ -194,7 +194,7 @@ export default class TetrisPanel {
             this.sendDataToViewWhenReady(data);
         }
     }
-    getData(func) {
+    getPanelData(func) {
         this.sendDataToViewWhenReady = func;
     }
 }

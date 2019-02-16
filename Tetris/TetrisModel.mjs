@@ -10,6 +10,6 @@ export default class TetrisModel {
         func();
     }
     getPanelData(func) {
-        this.tetrisPanel.getData(func);
+        this.tetrisPanel.getPanelData(func);
     }
 }

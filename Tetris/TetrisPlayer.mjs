@@ -23,14 +23,14 @@ export default class TetrisPlayer {
     inputKey(key) {
         window.onkeydown = null;
         window.onkeyup = this.checkKeyUp.bind(this);
-        if (!this.blocks) {
+                if (!this.blocks) {
+                    return;
+                    throw '키 입력시, 블럭이 존재하지 않는다.';
+                }
+        if (this.tetrisBlock.isDowning && key.code !== 'ArrowDown') {
             return;
-            //throw '키 입력시, 블럭이 존재하지 않는다.';
         }
-        // 키가 눌렸는데, isDowning 이고 키가 아래 화살표가 아니면, 실행 안한다.
-        if (this.tetrisBlock.isDowning && key.code !== "ArrowDown" ) {
-            return;
-        }
+        //if (this.inputing) return;
         //console.log(this.tetrisPanel);
         //key가 뭐지? 상, 하, 좌, 우 화살표만 반응..
         switch (key.code) {
@@ -45,15 +45,15 @@ export default class TetrisPlayer {
                 }
                 break;
             case "ArrowDown":
-            if (this.canMoveDown()) {
-                if (!this.tetrisBlock.isDowning) {
-                this.tetrisBlock.isDowning = true;
-                }
-                this.moveDown();
-                const inputKeyFunc = this.inputKey.bind(this);
-                setTimeout(() => {
-                        inputKeyFunc(key);
-                    }, 111);
+                if (this.canMoveDown()) {
+                    if (!this.tetrisBlock.isDowning) {
+                    this.tetrisBlock.isDowning = true;
+                    }
+                    this.moveDown();
+                    let myKeyFunc = this.inputKey.bind(this);
+                    setTimeout(() => {
+                        myKeyFunc(key);
+                    }, 129);
                 } else {
                     //clearTimeout(this.inputKeyHandle);
                     const newDeltaRow = this.tetrisBlock.newDeltaRow + 1;
