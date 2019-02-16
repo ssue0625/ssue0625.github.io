@@ -2,7 +2,7 @@ import PanelCell from './PanelCell.mjs';
 export default class TetrisBlock {
     constructor(tetrisPanel) {
         this.tetrisPanel = tetrisPanel;
-        this.speed = 500;
+        this.autoDownSpeed = 500;
         this.color = this._makeColor();
         // this.shape = [[{ row: -2, column: 0 }, { row: -2, column: 1 }],
         //              [{ row: -1, column: 0 }, { row: -1, column: 1 }]];
@@ -198,7 +198,7 @@ export default class TetrisBlock {
         //this.informBlockCreated();
         setTimeout(() => {
             this.autoMoveDown();
-        }, this.speed);
+        }, this.autoDownSpeed);
     }
     autoMoveDown() {
         const newDeltaRow = this.newDeltaRow + 1;
@@ -223,7 +223,7 @@ export default class TetrisBlock {
             if (!this.isDowning) {
                 this.autoMoveDown();
             }
-        }, this.speed);
+        }, this.autoDownSpeed);
         if (!this.informed && this.inform) {
             this.informBlockCreated();
             this.informed = true;
