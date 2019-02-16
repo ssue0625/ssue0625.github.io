@@ -2,7 +2,7 @@ import PanelCell from './PanelCell.mjs';
 export default class TetrisBlock {
     constructor(tetrisPanel) {
         this.tetrisPanel = tetrisPanel;
-        this.speed = 1000;
+        this.speed = 500;
         this.color = this._makeColor();
         // this.shape = [[{ row: -2, column: 0 }, { row: -2, column: 1 }],
         //              [{ row: -1, column: 0 }, { row: -1, column: 1 }]];
@@ -195,7 +195,7 @@ export default class TetrisBlock {
         if (!this.blocks) {
             this.blocks = this.makeTetrisCells(this.shapeIndex, this.rotateIndex);
         }
-        this.informBlockCreated();
+        // this.informBlockCreated();
         setTimeout(() => {
             this.autoMoveDown();
         }, this.speed);
@@ -203,7 +203,14 @@ export default class TetrisBlock {
     autoMoveDown() {
         const newDeltaRow = this.newDeltaRow + 1;
         // 테트리스 블럭의 각각의 셀들의 새로운 위치를 정해준 후, 움직일 수 있는지 체크
+        let canInform = true;
+        if (!this.isInformed) {
+            canInform = true;
+        }
         for (let cell of this.blocks) {
+            if (!this.isInformed && (cell.rowIndexToDraw < 0 || cell.columnIndexToDraw < 0)) {
+                canInform = false;
+            }
             cell.rowIndexToDraw = cell.rowIndex + newDeltaRow;
             cell.columnIndexToDraw = cell.columnIndex + this.newDeltaColumn;
         }
@@ -213,9 +220,18 @@ export default class TetrisBlock {
         }
         this.newDeltaRow++;
         this.makePanelDataWhenMoved();
+        const autoMoveDownFunc = this.autoMoveDown.bind(this);
         setTimeout(() => {
-            this.autoMoveDown();
+            //$.c('setTimeout', this.isDowning);
+            if (!this.isDowning) {  // undifined -> 논리값 형변환 -> false
+            //$.c('setTimeout', this.isDowning);
+            autoMoveDownFunc();
+            }
         }, this.speed);
+        if (!this.isInformed && canInform) {
+            this.informBlockCreated();
+            this.isInformed = true;
+        }
     }
     _makeColor() {
         const colors = '0123456789abcdef';
