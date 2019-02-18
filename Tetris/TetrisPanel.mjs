@@ -136,6 +136,7 @@ export default class TetrisPanel {
                 break;
             }
         }
+        // $.c('cccc');
         //$.c('기존 그림 그리기 직전');
         // 기존의 그림을 그려 놓는다.
         for (let cell of this.tetrisBlock.blocks) {
