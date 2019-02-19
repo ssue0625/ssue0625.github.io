@@ -22,17 +22,26 @@ export default class TetrisPlayer {
     }
     executeBestMove() {
         // 최고 점수 시, 이동 및 회전 방법을 저장.
+        $.c(this.maxScore, this.shapeIndexWhenMax, this.rotateIndexWhenMax, this.rowIndexWhenMax, this.columnIndexWhenMax);
         // 배열화 [회전, 회전, 좌측이동, 좌측이동, 좌측 이동, Down]
         setTimeout(() => {
             ;//배열의 동작을 실행;
         }, 100);
     }
-    calculateScore(row, column) {
-        $.c(`${this.tetrisBlock.shapeIndex}모양, ${this.tetrisBlock.rotateIndex}회전, ${row}행==${this.tetrisBlock.newDeltaRow}, ${column}열==${this.tetrisBlock.newDeltaColumn}`);
+    calculateScore() {
+        //$.c(`${this.tetrisBlock.shapeIndex}모양, ${this.tetrisBlock.rotateIndex}회전, ${row}행==${this.tetrisBlock.newDeltaRow}, ${column}열==${this.tetrisBlock.newDeltaColumn}`);
         // 점수 계산
+        const calculateScore = this.tetrisPanel.calculateScore.bind(this.tetrisPanel);
+        const score = calculateScore(this.tetrisBlock.newDeltaRow, this.tetrisBlock.newDeltaColumn);
         // 계산이 끝난 후, 현재까지 최고 점수와 비교
         // 최고 점수 시, 이동 및 회전 방법을 저장.
-
+        if (this.maxScore < score) {
+            this.maxScore = score;
+            this.shapeIndexWhenMax = this.tetrisBlock.shapeIndex;
+            this.rotateIndexWhenMax = this.tetrisBlock.rotateIndex;
+            this.rowIndexWhenMax = this.tetrisBlock.newDeltaRow;
+            this.columnIndexWhenMax = this.tetrisBlock.newDeltaColumn;
+        }
     }
     saveTetrisBlock() {
         this.rotateIndexSaved = this.tetrisBlock.rotateIndex;
@@ -64,13 +73,15 @@ export default class TetrisPlayer {
         // 현재 블럭의 new row와 new column 및 아래 내용을 보관.
         //this.tetrisBlock, this.blocks 보관
         this.saveTetrisBlock();
+        const makeScoreBoard = this.tetrisPanel.makeScoreBoard.bind(this.tetrisPanel);
+        this.maxScore = 0;
+        makeScoreBoard();
         // 움직일 수 있는 범위를 계산해서 보관. (canMovable 이용)
         // 회전 가능한 범위 (canRotatable 이용)
         const rotateSize = this.tetrisBlock.shapes[this.tetrisBlock.shapeIndex].length;    // 블록의 회전모양의 갯수.
         const originalDeltaColumn = this.tetrisBlock.newDeltaColumn;
         const originalDeltaRow = this.tetrisBlock.newDeltaRow;
         for (let rotateIndex = 0; rotateIndex < rotateSize; rotateIndex++) { // Rotatable 범위
-
             //this.tetrisBlock.shape = this.tetrisBlock.shapes[this.tetrisBlock.shapeIndex][this.tetrisBlock.rotateIndex];
             //let left =  //좌측으로 얼마나 갈 수 있나 
             this.tetrisBlock.newDeltaRow = originalDeltaRow;
@@ -97,7 +108,7 @@ export default class TetrisPlayer {
                 }
             }
             // 도달 가능한 좌측 끝열에서 우측 끝열까지 가서 해당 열에서 가장 밑으로 내려간다.
-            // 현재 열은 우측 가장 끝 열에 있다.
+            // 현재 열은 우측 가장 끝 열에 있다.         
             for (let columnIndex = leftLimitPosition; columnIndex <= rightLimitPosition; columnIndex++) {
                 this.tetrisBlock.newDeltaColumn = columnIndex;
                 this.tetrisBlock.newDeltaRow = originalDeltaRow;
@@ -113,7 +124,7 @@ export default class TetrisPlayer {
                 }
                 // 움직인 후, 다운까지 완료한 최종 상태에서 점수 계산
                 //$.c(rotateIndex + '회전', columnIndex + '열', downLimitPosition + '행');
-                this.calculateScore(downLimitPosition, columnIndex);  // rotateIndex 전달 불필요.  
+                this.calculateScore();  // rotateIndex 전달 불필요.  
             }
             // rotateIndex 0  실제 0
             // rotateIndex 1  실제 1

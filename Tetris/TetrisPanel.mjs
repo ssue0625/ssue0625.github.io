@@ -17,6 +17,61 @@ export default class TetrisPanel {
             this.panel.push(rows);
         }
     }
+    calculateScore(row, column) {
+        // ToDraw  좌표를 받아서..
+        // 새로운 위치에 그리고,
+        // 새로운거 그리기
+        for (let cell of this.tetrisBlock.blocks) {
+            // 둘 다 -1 이 아닐 때 들어옴..
+            // 하지만 에러 : 하나만 음수면 들어올 수 있음..
+            // 둘 다 양수이면 들어와야 함.
+            cell.rowIndexToDraw = cell.rowIndex + row;
+            cell.columnIndexToDraw = cell.columnIndex + column;
+            if (cell.rowIndexToDraw >= 0 && cell.columnIndexToDraw >= 0) {
+                this.scorePanel[cell.rowIndexToDraw][cell.columnIndexToDraw] = this.tetrisBlock.color;
+            }
+        }
+        // 점수판 계산하고,
+        let result = 0;
+        //$.c('계산중', row, column);
+        result = Math.random() * 100;
+        //scorePanel
+        // 지운다.
+        for (let cell of this.tetrisBlock.blocks) {
+            //cell.rowIndexToDraw = cell.rowIndex + row;
+            //cell.columnIndexToDraw = cell.columnIndex + column;
+            if (cell.rowIndexToDraw >= 0 && cell.columnIndexToDraw >= 0) {
+                this.scorePanel[cell.rowIndexToDraw][cell.columnIndexToDraw] = this.backgroundColor;
+            }
+        }
+        return result;
+    }
+    makeScoreBoard() {
+        this.scorePanel = [];// = this.panel;
+        // this.panel 사각형 : 행과 열로 이루어진 셀.
+        // scorePanel 에 행 만들어 주기
+        // soreRow = [];
+        // for : 행의 갯수
+        // for : 열의 갯수
+        // cell -> scorePanel
+        for (let row = 0; row < this.tetrisRows; row++) {
+            let rows = [];
+            for (let column = 0; column < this.tetrisColumns; column++) {
+                rows.push(this.panel[row][column]);
+            }
+            this.scorePanel.push(rows);
+        }
+        // 기존꺼 지우기    
+        let row;
+        let column;
+        for (let cell of this.tetrisBlock.blocks) {
+            if (cell.rowIndexDrawn != -1 && cell.columnIndexDrawn != -1) {
+                row = cell.rowIndexDrawn;
+                column = cell.columnIndexDrawn;
+                this.scorePanel[row][column] = this.backgroundColor;
+            }
+        }
+    }
     clearCell(row, column) {
         this.panel[row][column] = this.backgroundColor;
     }
