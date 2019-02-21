@@ -168,7 +168,7 @@ export default class TetrisBlock {
         }, 0);
     }
     _getNextRotateIndex() { // 새로운 Rotate Index를 만드는 방법!
-        let shapeSize = this.shapes[this.shapeIndex].length;    // 블록의 회전모양의 갯수.
+        let shapeSize = this.shapes[this.shapeIndex].length; // 블록의 회전모양의 갯수.
         let newRotateIndex = this.rotateIndex + 1;
         if (newRotateIndex == shapeSize) {
             newRotateIndex = 0;

@@ -32,9 +32,16 @@ export default class TetrisPanel {
             }
         }
         // 점수판 계산하고,
-        let result = 0;
+        let result = 0; 
         //$.c('계산중', row, column);
         result = Math.random() * 100;
+        // for (let row = 0; row < this.tetrisRows; row++) {
+        //     let rows = [];
+        //     for (let column = 0; column < this.tetrisColumns; column++) {
+        //         rows.push(this.panel[row][column]);
+        //     }
+        //     this.scorePanel.push(rows);
+        // }
         //scorePanel
         // 지운다.
         for (let cell of this.tetrisBlock.blocks) {
@@ -47,7 +54,7 @@ export default class TetrisPanel {
         return result;
     }
     makeScoreBoard() {
-        this.scorePanel = [];// = this.panel;
+        this.scorePanel = []; // = this.panel;
         // this.panel 사각형 : 행과 열로 이루어진 셀.
         // scorePanel 에 행 만들어 주기
         // soreRow = [];

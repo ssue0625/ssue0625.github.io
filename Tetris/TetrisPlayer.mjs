@@ -25,7 +25,7 @@ export default class TetrisPlayer {
         $.c(this.maxScore, this.shapeIndexWhenMax, this.rotateIndexWhenMax, this.rowIndexWhenMax, this.columnIndexWhenMax);
         // 배열화 [회전, 회전, 좌측이동, 좌측이동, 좌측 이동, Down]
         setTimeout(() => {
-            ;//배열의 동작을 실행;
+            ; //배열의 동작을 실행;
         }, 100);
     }
     calculateScore() {
@@ -33,7 +33,7 @@ export default class TetrisPlayer {
         // 점수 계산
         const calculateScore = this.tetrisPanel.calculateScore.bind(this.tetrisPanel);
         const score = calculateScore(this.tetrisBlock.newDeltaRow, this.tetrisBlock.newDeltaColumn);
-        // 계산이 끝난 후, 현재까지 최고 점수와 비교
+        // 계산이 끝난 후, 현재까지 최고 점수와 비교 
         // 최고 점수 시, 이동 및 회전 방법을 저장.
         if (this.maxScore < score) {
             this.maxScore = score;
@@ -78,7 +78,7 @@ export default class TetrisPlayer {
         makeScoreBoard();
         // 움직일 수 있는 범위를 계산해서 보관. (canMovable 이용)
         // 회전 가능한 범위 (canRotatable 이용)
-        const rotateSize = this.tetrisBlock.shapes[this.tetrisBlock.shapeIndex].length;    // 블록의 회전모양의 갯수.
+        const rotateSize = this.tetrisBlock.shapes[this.tetrisBlock.shapeIndex].length; // 블록의 회전모양의 갯수.
         const originalDeltaColumn = this.tetrisBlock.newDeltaColumn;
         const originalDeltaRow = this.tetrisBlock.newDeltaRow;
         for (let rotateIndex = 0; rotateIndex < rotateSize; rotateIndex++) { // Rotatable 범위
@@ -114,7 +114,7 @@ export default class TetrisPlayer {
                 this.tetrisBlock.newDeltaRow = originalDeltaRow;
                 // Down 가능한 한 최대한 다운.
                 let downLimitPosition;
-                while (true) {  // 최대 다운가능한  행 구하기.
+                while (true) { // 최대 다운가능한  행 구하기.
                     if (this.canMoveDown()) {
                         this.tetrisBlock.newDeltaRow++;
                     } else {
@@ -124,7 +124,7 @@ export default class TetrisPlayer {
                 }
                 // 움직인 후, 다운까지 완료한 최종 상태에서 점수 계산
                 //$.c(rotateIndex + '회전', columnIndex + '열', downLimitPosition + '행');
-                this.calculateScore();  // rotateIndex 전달 불필요.  
+                this.calculateScore(); // rotateIndex 전달 불필요.  
             }
             // rotateIndex 0  실제 0
             // rotateIndex 1  실제 1

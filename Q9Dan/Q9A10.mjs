@@ -1,4 +1,4 @@
-export default class Q9_A10 {
+export default class Q9A10 {
     testFunc() {
         const area = document.querySelector('.article');
         const content = `
