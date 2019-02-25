@@ -1,7 +1,8 @@
-//import Q9_A10Class from './Q9A10.mjs';
-import Q9_A10Func from './Q9A10.mjs';
-
-//(new Q9_A10).testFunc();
-//const Q9_A10 = new Q9_A10Class();
-//window.Q9Dan = {'Q9A10' : Q9_A10.testFunc.bind(Q9_A10)};
-window.Q9Dan = {'Q9A10' : Q9_A10Func};
+import Q9Func from './Q9.mjs';
+import Q9A10Func from './Q9A10.mjs';
+import Q9A20Func from './Q9A20.mjs';
+window.Q9Dan = {
+    'Q9': Q9Func,
+    'Q9A10': Q9A10Func,
+    'Q9A20': Q9A20Func
+};

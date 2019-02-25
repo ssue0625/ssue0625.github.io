@@ -1,4 +1,4 @@
-const Q9A10 = function () {
+const Q9A20 = function () {
     const area = document.querySelector('.article');
     const content = `
     <body>
@@ -6,10 +6,10 @@ const Q9A10 = function () {
         <p>Console에서 결과 확인</p>
         <h3>코드</h3>
         <p>
-            for (let j = 1; j < 10; j++) { 
-                for (let k=1; k < 10; k++) { 
-                    console.log(j + " x " + k + " = " + j * k); 
-                } 
+            for (let j = 9; j > 1; j--) {
+                for (let k = 9; k > 1; k--) {
+                    console.log(k + " x " + j + " = " + k * j);
+                }
             }
         </p>
         <h3>사용 기술</h3>
@@ -21,10 +21,10 @@ const Q9A10 = function () {
     </body>
     `;
     area.innerHTML = content;
-    for (let j = 1; j < 10; j++) {
-        for (let k = 1; k < 10; k++) {
+    for (let j = 9; j >= 1; j--) {
+        for (let k = 9; k >= 1; k--) {
             console.log(j + " x " + k + " = " + j * k);
         }
     }
 }
-export default Q9A10;
+export default Q9A20;
