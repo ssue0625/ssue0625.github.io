@@ -24,15 +24,27 @@ export default class TetrisPlayer {
         // 최고 점수 시, 이동 및 회전 방법을 저장.
         $.c(this.maxScore, this.shapeIndexWhenMax, this.rotateIndexWhenMax, this.rowIndexWhenMax, this.columnIndexWhenMax);
         // 배열화 [회전, 회전, 좌측이동, 좌측이동, 좌측 이동, Down]
-        setTimeout(() => {
+        const moveArray = [{ 'code': 'ArrowUp' }, { 'code': 'ArrowLeft' }, { 'code': 'ArrowLeft' }, { 'code': 'ArrowDown' }];
+        const handle = setInterval(() => {
+            //$.c(moveArray);
+            let optionObject = moveArray.shift();
+            if (optionObject) {
+            let down = new KeyboardEvent('keydown', optionObject);
+            window.dispatchEvent(down);
             ; //배열의 동작을 실행;
-        }, 100);
+            const up = new KeyboardEvent('keyup', optionObject);
+            window.dispatchEvent(up);
+            } else {
+                clearInterval(handle);
+            }
+        }, 30);
     }
     calculateScore() {
-        //$.c(`${this.tetrisBlock.shapeIndex}모양, ${this.tetrisBlock.rotateIndex}회전, ${row}행==${this.tetrisBlock.newDeltaRow}, ${column}열==${this.tetrisBlock.newDeltaColumn}`);
+        //$.c(`${this.tetrisBlock.shapeIndex}모양, ${this.tetrisBlock.rotateIndex}회전, ${this.tetrisBlock.newDeltaRow}행, ${this.tetrisBlock.newDeltaColumn}열`);
         // 점수 계산
         const calculateScore = this.tetrisPanel.calculateScore.bind(this.tetrisPanel);
         const score = calculateScore(this.tetrisBlock.newDeltaRow, this.tetrisBlock.newDeltaColumn);
+        //$.c('score',score);
         // 계산이 끝난 후, 현재까지 최고 점수와 비교 
         // 최고 점수 시, 이동 및 회전 방법을 저장.
         if (this.maxScore < score) {
@@ -175,6 +187,7 @@ export default class TetrisPlayer {
             case "ArrowLeft":
                 if (this.canMoveLeft()) {
                     this.moveLeft();
+                    //$.c(key);
                 }
                 break;
             case "ArrowRight":

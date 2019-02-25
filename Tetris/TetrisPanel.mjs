@@ -34,14 +34,21 @@ export default class TetrisPanel {
         // 점수판 계산하고,
         let result = 0; 
         //$.c('계산중', row, column);
-        result = Math.random() * 100;
-        // for (let row = 0; row < this.tetrisRows; row++) {
-        //     let rows = [];
-        //     for (let column = 0; column < this.tetrisColumns; column++) {
-        //         rows.push(this.panel[row][column]);
-        //     }
-        //     this.scorePanel.push(rows);
-        // }
+        //result = Math.random() * 100;
+        let continueCell;
+        for (let rowIndex = 0; rowIndex < this.tetrisRows; rowIndex++) {
+            continueCell = 0;
+            for (let columnIndex = 0; columnIndex < this.tetrisColumns; columnIndex++) {
+                if (this.scorePanel[rowIndex][columnIndex] != this.backgroundColor) {
+                    //$.c(rowIndex,columnIndex);
+                    continueCell++;
+                    result += rowIndex * 10 + 1;
+                    if (continueCell == this.tetrisColumns) {
+                        result += (rowIndex + 1) * 10;
+                    }
+                }
+            }
+        }
         //scorePanel
         // 지운다.
         for (let cell of this.tetrisBlock.blocks) {

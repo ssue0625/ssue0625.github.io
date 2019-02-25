@@ -1,9 +1,10 @@
-export default class Q9A10 {
-    testFunc() {
-        const area = document.querySelector('.article');
-        const content = `
+//export default class Q9A10 {
+const  Q9A10 = function () {
+    const area = document.querySelector('.article');
+    const content = `
 <body>
 <h3 id="Q9_A100">결과</h3>
+    <p>Console에서 결과 확인</p>
     <h3>코드</h3>
     <p>
         for (let j = 1; j < 10; j++) { 
@@ -20,15 +21,16 @@ export default class Q9A10 {
     <p>Document 구조를 이용해서 브라우저에 출력하는 걸 해 본다.</p>
     </body>
 `;
-        //
-        area.innerHTML = content;
-        for (let j = 1; j < 10; j++) {
-            for (let k = 1; k < 10; k++) {
-                console.log(j + " x " + k + " = " + j * k);
-            }
+    //
+    area.innerHTML = content;
+    for (let j = 1; j < 10; j++) {
+        for (let k = 1; k < 10; k++) {
+            console.log(j + " x " + k + " = " + j * k);
         }
     }
 }
+export default  Q9A10;
+
 // const testFunc = function () {
 //     const area = document.querySelector('.article');
 //     const content = `
