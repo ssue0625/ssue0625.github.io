@@ -6,7 +6,7 @@ export default class TetrisPanel {
         this.tetrisModel = tetrisModel;
         this.tetrisRows = tetrisRows;
         this.tetrisColumns = tetrisColumns;
-        this.backgroundColor = '#c8c8c8';
+        this.backgroundColor = 'black';//'#c8c8c8';
         this.tetrisBlock = new TetrisBlock(this);
         this.panel = [];
         for (let row = 0; row < tetrisRows; row++) {
@@ -32,23 +32,32 @@ export default class TetrisPanel {
             }
         }
         // 점수판 계산하고,
-        let result = 0; 
+        let result = 0;
         //$.c('계산중', row, column);
         //result = Math.random() * 100;
         let continueCell;
         for (let rowIndex = 0; rowIndex < this.tetrisRows; rowIndex++) {
+            //rowCellScore = (rowIndex + 1) * rowCellScore;   // 1 * 100, 2 * (1 * 100), 3 * (2 * (1 * 100))
+            let rowCellScore = Math.pow(100, rowIndex + 1);
             continueCell = 0;
+            let columnCell = 0;
             for (let columnIndex = 0; columnIndex < this.tetrisColumns; columnIndex++) {
                 if (this.scorePanel[rowIndex][columnIndex] != this.backgroundColor) {
                     //$.c(rowIndex,columnIndex);
+                    columnCell = Math.abs(this.tetrisColumns / 2 - columnIndex) * rowCellScore / 10;
                     continueCell++;
-                    result += rowIndex * 10 + 1;
+                    result += rowCellScore + columnCell;
                     if (continueCell == this.tetrisColumns) {
-                        result += (rowIndex + 1) * 10;
+                        //$.c('full', rowCellScore, continueCell);
+                        result += rowCellScore / 10 * continueCell * 3;
+                    } else {
+                        //$.c(rowCellScore, continueCell);
+                        result += rowCellScore / 10 * continueCell;
                     }
                 }
             }
         }
+        //$.c(row, column, result);
         //scorePanel
         // 지운다.
         for (let cell of this.tetrisBlock.blocks) {

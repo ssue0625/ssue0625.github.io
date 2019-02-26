@@ -7,6 +7,7 @@ export default class TetrisPlayer {
         //this.blocks
         this.makePanelDataWhenMoved = this.tetrisPanel.changePanelBackground.bind(this.tetrisPanel);
         this.speedWhenDownKeyPressed = 100;
+        this.autoPlaySpeed = 100;
         setTimeout(() => {
             this.doAfterInstanciated();
         }, 0);
@@ -22,32 +23,69 @@ export default class TetrisPlayer {
     }
     executeBestMove() {
         // 최고 점수 시, 이동 및 회전 방법을 저장.
-        $.c(this.maxScore, this.shapeIndexWhenMax, this.rotateIndexWhenMax, this.rowIndexWhenMax, this.columnIndexWhenMax);
+        //$.c(this.maxScore, this.shapeIndexWhenMax, this.rotateIndexWhenMax, this.rowIndexWhenMax, this.columnIndexWhenMax);
+        //$.c(`${this.rotateIndexWhenMax}회전, ${this.columnIndexWhenMax}열`);
         // 배열화 [회전, 회전, 좌측이동, 좌측이동, 좌측 이동, Down]
-        const moveArray = [{ 'code': 'ArrowUp' }, { 'code': 'ArrowLeft' }, { 'code': 'ArrowLeft' }, { 'code': 'ArrowDown' }];
-        const handle = setInterval(() => {
-            //$.c(moveArray);
-            let optionObject = moveArray.shift();
-            if (optionObject) {
-            let down = new KeyboardEvent('keydown', optionObject);
-            window.dispatchEvent(down);
-            ; //배열의 동작을 실행;
-            const up = new KeyboardEvent('keyup', optionObject);
-            window.dispatchEvent(up);
-            } else {
-                clearInterval(handle);
+        const moveArray = [];
+        // 현재의 rotateIndex에서 rotateIndexWhenMax까지 갈 수 있도록
+        // 'ArrowUp'을 누르게끔 moveArray를 준비한다.
+        for (let rotateIndex = this.tetrisBlock.rotateIndex;
+            rotateIndex < this.rotateIndexWhenMax;
+            rotateIndex++) {
+            moveArray.push({ 'code': 'ArrowUp' });
+        }
+        const columnIndex = this.tetrisBlock.newDeltaColumn;
+        //$.c('columnIndex = ', columnIndex);
+        if (this.columnIndexWhenMax <= columnIndex) { // 좌측으로
+            //$.c('left');
+            for (let col = columnIndex;
+                col > this.columnIndexWhenMax;
+                col--) {
+                moveArray.push({ 'code': 'ArrowLeft' });
             }
-        }, 30);
+        } else {    // 우측으로
+            //$.c('right');
+            for (let col = columnIndex;
+                col < this.columnIndexWhenMax;
+                col++) {
+                moveArray.push({ 'code': 'ArrowRight' });
+            }
+        }
+        /////////////////////////////moveArray.push({ 'code': 'ArrowDown' });
+        //$.c(moveArray);
+        // moveArray.forEach((element)=> {
+        //     $.c(element);
+        // });
+        //  $.c(moveArray.length, moveArray[0]);
+        const handle = setInterval(() => {
+            let optionObject = moveArray.shift();
+            //$.c(optionObject);
+            if (optionObject) {
+                let down = new KeyboardEvent('keydown', optionObject);
+                window.dispatchEvent(down);
+                ; //배열의 동작을 실행;
+                let up = new KeyboardEvent('keyup', optionObject);
+                window.dispatchEvent(up);
+                if (optionObject.code == 'ArrowDown') {
+                    clearInterval(handle);
+                }
+            }
+            //  else {
+            //     //$.c('clear');
+            //     clearInterval(handle);
+            // }
+        }, this.autoPlaySpeed);
     }
     calculateScore() {
         //$.c(`${this.tetrisBlock.shapeIndex}모양, ${this.tetrisBlock.rotateIndex}회전, ${this.tetrisBlock.newDeltaRow}행, ${this.tetrisBlock.newDeltaColumn}열`);
         // 점수 계산
         const calculateScore = this.tetrisPanel.calculateScore.bind(this.tetrisPanel);
         const score = calculateScore(this.tetrisBlock.newDeltaRow, this.tetrisBlock.newDeltaColumn);
-        //$.c('score',score);
         // 계산이 끝난 후, 현재까지 최고 점수와 비교 
         // 최고 점수 시, 이동 및 회전 방법을 저장.
         if (this.maxScore < score) {
+            //$.c('Max', this.maxScore, score);
+            //$.c(`${this.tetrisBlock.rotateIndex}회전, ${this.tetrisBlock.newDeltaColumn}열`);
             this.maxScore = score;
             this.shapeIndexWhenMax = this.tetrisBlock.shapeIndex;
             this.rotateIndexWhenMax = this.tetrisBlock.rotateIndex;
