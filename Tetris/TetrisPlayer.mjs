@@ -7,7 +7,7 @@ export default class TetrisPlayer {
         //this.blocks
         this.makePanelDataWhenMoved = this.tetrisPanel.changePanelBackground.bind(this.tetrisPanel);
         this.speedWhenDownKeyPressed = 100;
-        this.autoPlaySpeed = 100;
+        this.autoPlaySpeed = 50;
         setTimeout(() => {
             this.doAfterInstanciated();
         }, 0);
@@ -51,19 +51,19 @@ export default class TetrisPlayer {
                 moveArray.push({ 'code': 'ArrowRight' });
             }
         }
-        /////////////////////////////moveArray.push({ 'code': 'ArrowDown' });
+        moveArray.push({ 'code': 'ArrowDown' });
         //$.c(moveArray);
         // moveArray.forEach((element)=> {
         //     $.c(element);
         // });
         //  $.c(moveArray.length, moveArray[0]);
         const handle = setInterval(() => {
+            //배열의 동작을 실행;
             let optionObject = moveArray.shift();
             //$.c(optionObject);
             if (optionObject) {
                 let down = new KeyboardEvent('keydown', optionObject);
                 window.dispatchEvent(down);
-                ; //배열의 동작을 실행;
                 let up = new KeyboardEvent('keyup', optionObject);
                 window.dispatchEvent(up);
                 if (optionObject.code == 'ArrowDown') {
@@ -83,7 +83,13 @@ export default class TetrisPlayer {
         const score = calculateScore(this.tetrisBlock.newDeltaRow, this.tetrisBlock.newDeltaColumn);
         // 계산이 끝난 후, 현재까지 최고 점수와 비교 
         // 최고 점수 시, 이동 및 회전 방법을 저장.
-        if (this.maxScore < score) {
+        let needToChange = this.maxScore < score;
+        if (this.maxScore === score) {   // 최고값과 같은 값일 때. 좌우 선택을 임의로 한다.
+            if (Math.floor(Math.random() * 2) == 0) {
+                needToChange = true;
+            }
+        }
+        if (needToChange) {
             //$.c('Max', this.maxScore, score);
             //$.c(`${this.tetrisBlock.rotateIndex}회전, ${this.tetrisBlock.newDeltaColumn}열`);
             this.maxScore = score;
@@ -239,9 +245,15 @@ export default class TetrisPlayer {
                         this.tetrisBlock.isDowning = true;
                     }
                     this.moveDown();
-                    let myKeyFunc = this.inputKey.bind(this);
+                    //let myKeyFunc = this.inputKey.bind(this);
                     setTimeout(() => {
-                        myKeyFunc(key);
+                        //myKeyFunc(key);
+                        // ArrowDown Event를 만들고,
+                        // keydown 이벤트를 발생시킨다.
+                        let down = new KeyboardEvent('keydown', {'code' : 'ArrowDown'});
+                        window.dispatchEvent(down);
+                        let up = new KeyboardEvent('keyup', {'code' : 'ArrowDown'});
+                        window.dispatchEvent(up);
                     }, this.speedWhenDownKeyPressed);
                 } else {
                     //clearTimeout(this.inputKeyHandle);

@@ -35,25 +35,32 @@ export default class TetrisPanel {
         let result = 0;
         //$.c('계산중', row, column);
         //result = Math.random() * 100;
-        let continueCell;
+        let continuedCell;
+        let howManyCell;
         for (let rowIndex = 0; rowIndex < this.tetrisRows; rowIndex++) {
             //rowCellScore = (rowIndex + 1) * rowCellScore;   // 1 * 100, 2 * (1 * 100), 3 * (2 * (1 * 100))
-            let rowCellScore = Math.pow(100, rowIndex + 1);
-            continueCell = 0;
-            let columnCell = 0;
+            let rowCellScore = Math.pow(100, rowIndex + 1); // 행의 셀이 가지는 기본 점수 .
+            continuedCell = 0;  // 몇 개의 셀이 연속한 블럭인가
+            howManyCell = 0;   // 현재 행에 몇개의 셀이 블럭인가?
+            let cellDistance = 0; // 중앙 셀에서 얼마나 떨어져 있는가?
             for (let columnIndex = 0; columnIndex < this.tetrisColumns; columnIndex++) {
+                // 몇번 째 행, 몇번 째 열에 블록이 있는가?
+                cellDistance = Math.abs(this.tetrisColumns / 2 - columnIndex);
                 if (this.scorePanel[rowIndex][columnIndex] != this.backgroundColor) {
                     //$.c(rowIndex,columnIndex);
-                    columnCell = Math.abs(this.tetrisColumns / 2 - columnIndex) * rowCellScore / 10;
-                    continueCell++;
-                    result += rowCellScore + columnCell;
-                    if (continueCell == this.tetrisColumns) {
-                        //$.c('full', rowCellScore, continueCell);
-                        result += rowCellScore / 10 * continueCell * 3;
-                    } else {
-                        //$.c(rowCellScore, continueCell);
-                        result += rowCellScore / 10 * continueCell;
-                    }
+                    continuedCell++;
+                    howManyCell++;
+                    result += rowCellScore;
+                    //result += rowCellScore + cellDistance * rowCellScore / 10;
+                    // if (howManyCell == this.tetrisColumns) {   // 전체 열이 채워졌나?
+                    //     //$.c('full', rowCellScore, continueCell);
+                    //     result += rowCellScore / 10 * howManyCell * 3;
+                    // } else {
+                    //     //$.c(rowCellScore, continueCell);
+                    //     result += rowCellScore / 10 * howManyCell;
+                    // }
+                } else {
+                    continuedCell = 0;
                 }
             }
         }
