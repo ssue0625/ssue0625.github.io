@@ -29,36 +29,32 @@ export default class TetrisPlayer {
         const moveArray = [];
         // 현재의 rotateIndex에서 rotateIndexWhenMax까지 갈 수 있도록
         // 'ArrowUp'을 누르게끔 moveArray를 준비한다.
-        for (let rotateIndex = this.tetrisBlock.rotateIndex;
-            rotateIndex < this.rotateIndexWhenMax;
-            rotateIndex++) {
-            moveArray.push({ 'code': 'ArrowUp' });
+        for (let rotateIndex = this.tetrisBlock.rotateIndex; rotateIndex < this.rotateIndexWhenMax; rotateIndex++) {
+            moveArray.push({
+                'code': 'ArrowUp'
+            });
         }
         const columnIndex = this.tetrisBlock.newDeltaColumn;
         //$.c('columnIndex = ', columnIndex);
         if (this.columnIndexWhenMax <= columnIndex) { // 좌측으로
             //$.c('left');
-            for (let col = columnIndex;
-                col > this.columnIndexWhenMax;
-                col--) {
-                moveArray.push({ 'code': 'ArrowLeft' });
+            for (let col = columnIndex; col > this.columnIndexWhenMax; col--) {
+                moveArray.push({
+                    'code': 'ArrowLeft'
+                });
             }
-        } else {    // 우측으로
+        } else { // 우측으로
             //$.c('right');
-            for (let col = columnIndex;
-                col < this.columnIndexWhenMax;
-                col++) {
-                moveArray.push({ 'code': 'ArrowRight' });
+            for (let col = columnIndex; col < this.columnIndexWhenMax; col++) {
+                moveArray.push({
+                    'code': 'ArrowRight'
+                });
             }
         }
-        moveArray.push({ 'code': 'ArrowDown' });
-        //$.c(moveArray);
-        // moveArray.forEach((element)=> {
-        //     $.c(element);
-        // });
-        //  $.c(moveArray.length, moveArray[0]);
+        moveArray.push({
+            'code': 'ArrowDown'
+        });
         const handle = setInterval(() => {
-            //배열의 동작을 실행;
             let optionObject = moveArray.shift();
             //$.c(optionObject);
             if (optionObject) {
@@ -84,7 +80,7 @@ export default class TetrisPlayer {
         // 계산이 끝난 후, 현재까지 최고 점수와 비교 
         // 최고 점수 시, 이동 및 회전 방법을 저장.
         let needToChange = this.maxScore < score;
-        if (this.maxScore === score) {   // 최고값과 같은 값일 때. 좌우 선택을 임의로 한다.
+        if (this.maxScore === score) { // 최고값과 같은 값일 때. 좌우 선택을 임의로 한다.
             if (Math.floor(Math.random() * 2) == 0) {
                 needToChange = true;
             }
@@ -182,11 +178,6 @@ export default class TetrisPlayer {
                 //$.c(rotateIndex + '회전', columnIndex + '열', downLimitPosition + '행');
                 this.calculateScore(); // rotateIndex 전달 불필요.  
             }
-            // rotateIndex 0  실제 0
-            // rotateIndex 1  실제 1
-            // rotateIndex 2  실제 2
-            // rotateIndex 3  실제 3
-            // rotateIndex 4  실제 4 = 0
             this.tetrisBlock.newDeltaRow = originalDeltaRow;
             this.tetrisBlock.newDeltaColumn = originalDeltaColumn;
             if (this.canRotatable()) {
@@ -194,16 +185,13 @@ export default class TetrisPlayer {
                 this.tetrisBlock = this.tetrisPanel.tetrisBlock;
                 this.blocks = this.tetrisBlock.blocks;
             } else {
-                throw '모두 Rotable 해야만 한다.';
+                return;
+                //throw '모두 Rotable 해야만 한다.';
             }
             // 원상태의 모양까지 만든 후 비로서 탈출
             if (rotateIndex == rotateSize - 1) {
                 break;
             }
-            // rotateIndex 0  실제 1
-            // rotateIndex 1  실제 2
-            // rotateIndex 2  실제 3
-            // rotateIndex 3  실제 4->0
         }
         // 보관했던 row와 column 및 아래를 복원.
         // 현재 블럭의 new row와 new column 및 아래 내용을 보관.
@@ -250,9 +238,13 @@ export default class TetrisPlayer {
                         //myKeyFunc(key);
                         // ArrowDown Event를 만들고,
                         // keydown 이벤트를 발생시킨다.
-                        let down = new KeyboardEvent('keydown', {'code' : 'ArrowDown'});
+                        let down = new KeyboardEvent('keydown', {
+                            'code': 'ArrowDown'
+                        });
                         window.dispatchEvent(down);
-                        let up = new KeyboardEvent('keyup', {'code' : 'ArrowDown'});
+                        let up = new KeyboardEvent('keyup', {
+                            'code': 'ArrowDown'
+                        });
                         window.dispatchEvent(up);
                     }, this.speedWhenDownKeyPressed);
                 } else {
@@ -316,7 +308,8 @@ export default class TetrisPlayer {
         const makeTetrisCells = this.tetrisBlock.makeTetrisCells.bind(this.tetrisBlock);
         const newBlocks = makeTetrisCells(this.tetrisBlock.shapeIndex, this.newRotateIndex);
         if (!newBlocks) {
-            throw '회전시, 새로 회전할 블럭이 안 만들어짐';
+            return;
+            //throw '회전시, 새로 회전할 블럭이 안 만들어짐';
         }
         return newBlocks;
     }

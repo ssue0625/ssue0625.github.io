@@ -241,9 +241,9 @@ export default class TetrisBlock {
             for (let i = 0; i < 6; i++) {
                 // 아무 색이나 블럭 색이 되는 알고리즘.
                 //ret += colors.charAt(Math.floor(Math.random() * 16));
-                //ret += colors.charAt(Math.floor(Math.random() * 8));  // 배경색이 흰색일 때
                 // 배경색과 블럭 색을 구별하기 쉽게하는 알고리즘.
-                ret += colors.charAt(Math.floor(Math.random() * 8) + 8);    // 배경색이 검은색
+                //ret += colors.charAt(Math.floor(Math.random() * 8));  // 배경색이 흰색일 때
+                ret += colors.charAt(Math.floor(Math.random() * 8) + 8); // 배경색이 검은색
             }
             if (ret == this.tetrisPanel.backgroundColor) {
                 alert('패널 배경색과 같은 색깔을 만들었네');

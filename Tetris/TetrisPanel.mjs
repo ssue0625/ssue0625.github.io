@@ -6,7 +6,7 @@ export default class TetrisPanel {
         this.tetrisModel = tetrisModel;
         this.tetrisRows = tetrisRows;
         this.tetrisColumns = tetrisColumns;
-        this.backgroundColor = 'black';//'#c8c8c8';
+        this.backgroundColor = 'black'; //'#c8c8c8';
         this.tetrisBlock = new TetrisBlock(this);
         this.panel = [];
         for (let row = 0; row < tetrisRows; row++) {
@@ -40,8 +40,8 @@ export default class TetrisPanel {
         for (let rowIndex = 0; rowIndex < this.tetrisRows; rowIndex++) {
             //rowCellScore = (rowIndex + 1) * rowCellScore;   // 1 * 100, 2 * (1 * 100), 3 * (2 * (1 * 100))
             let rowCellScore = Math.pow(100, rowIndex + 1); // 행의 셀이 가지는 기본 점수 .
-            continuedCell = 0;  // 몇 개의 셀이 연속한 블럭인가
-            howManyCell = 0;   // 현재 행에 몇개의 셀이 블럭인가?
+            continuedCell = 0; // 몇 개의 셀이 연속한 블럭인가
+            howManyCell = 0; // 현재 행에 몇개의 셀이 블럭인가?
             let cellDistance = 0; // 중앙 셀에서 얼마나 떨어져 있는가?
             for (let columnIndex = 0; columnIndex < this.tetrisColumns; columnIndex++) {
                 // 몇번 째 행, 몇번 째 열에 블록이 있는가?
