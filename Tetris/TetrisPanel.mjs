@@ -33,35 +33,54 @@ export default class TetrisPanel {
         }
         // 점수판 계산하고,
         let result = 0;
-        //$.c('계산중', row, column);
-        //result = Math.random() * 100;
-        let continuedCell;
-        let howManyCell;
+        let cellScore;
+        let howManyCells;
+        let continuedCells;
+        let sideDistance;
+        let isEmpty;
+        let emptyNumbers;
+        let isFill;
+        let fillNumbers;
         for (let rowIndex = 0; rowIndex < this.tetrisRows; rowIndex++) {
-            //rowCellScore = (rowIndex + 1) * rowCellScore;   // 1 * 100, 2 * (1 * 100), 3 * (2 * (1 * 100))
-            let rowCellScore = Math.pow(100, rowIndex + 1); // 행의 셀이 가지는 기본 점수 .
-            continuedCell = 0; // 몇 개의 셀이 연속한 블럭인가
-            howManyCell = 0; // 현재 행에 몇개의 셀이 블럭인가?
-            let cellDistance = 0; // 중앙 셀에서 얼마나 떨어져 있는가?
+            cellScore = Math.pow(this.tetrisColumns * 10, rowIndex + 1); // 행의 셀이 가지는 기본 점수 .
+            howManyCells = 0; // 현재 행에 몇개의 셀이 블럭인가?
+            continuedCells = 0; // 몇 개의 셀이 연속한 블럭인가
+            sideDistance = 0; // 중앙 셀에서 얼마나 떨어져 있는가?
+            isEmpty = false;
+            emptyNumbers = 0;
+            isFill = false;
+            fillNumbers = 0;
             for (let columnIndex = 0; columnIndex < this.tetrisColumns; columnIndex++) {
                 // 몇번 째 행, 몇번 째 열에 블록이 있는가?
-                cellDistance = Math.abs(this.tetrisColumns / 2 - columnIndex);
+                sideDistance = Math.abs(this.tetrisColumns / 2 - columnIndex);
                 if (this.scorePanel[rowIndex][columnIndex] != this.backgroundColor) {
-                    //$.c(rowIndex,columnIndex);
-                    continuedCell++;
-                    howManyCell++;
-                    result += rowCellScore;
-                    //result += rowCellScore + cellDistance * rowCellScore / 10;
-                    // if (howManyCell == this.tetrisColumns) {   // 전체 열이 채워졌나?
-                    //     //$.c('full', rowCellScore, continueCell);
-                    //     result += rowCellScore / 10 * howManyCell * 3;
-                    // } else {
-                    //     //$.c(rowCellScore, continueCell);
-                    //     result += rowCellScore / 10 * howManyCell;
-                    // }
+                    howManyCells++;
+                    continuedCells++;
+                    result += sideDistance * cellScore;  // 사이드로
+                    isEmpty = false;
+                    if (!isFill) {
+                        fillNumbers++;
+                        isFill = true;
+                    }
                 } else {
-                    continuedCell = 0;
+                    if (continuedCells != 0) {
+                        result += continuedCells * cellScore * 8; // 연속된 셀
+                        continuedCells = 0;
+                    }
+                    if (!isEmpty) {
+                        isEmpty = true;
+                        emptyNumbers++;
+                    }
+                    isFill = false;
                 }
+            }
+            result = result +
+                howManyCells * cellScore +  // 행에 있는 블럭의 전체 셀 갯수
+                continuedCells * cellScore * 8 +  // 연속된 셀
+                (this.tetrisColumns - fillNumbers) * cellScore * 3 -    // 찬 칸이 많은 경우
+                emptyNumbers * cellScore * 4;   // 빈 칸이 많은 경우 빼기
+            if (howManyCells === this.tetrisColumns) {  // Cell이 꽉찬 경우
+                result += cellScore * this.tetrisColumns * 10; 
             }
         }
         //$.c(row, column, result);
