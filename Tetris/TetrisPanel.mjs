@@ -64,7 +64,7 @@ export default class TetrisPanel {
                     }
                 } else {
                     if (continuedCells != 0) {
-                        result += continuedCells * cellScore * 8; // 연속된 셀
+                        result += continuedCells * cellScore * 11; // 연속된 셀
                         continuedCells = 0;
                     }
                     if (!isEmpty) {
@@ -76,9 +76,9 @@ export default class TetrisPanel {
             }
             result = result +
                 howManyCells * cellScore +  // 행에 있는 블럭의 전체 셀 갯수
-                continuedCells * cellScore * 8 +  // 연속된 셀
-                (this.tetrisColumns - fillNumbers) * cellScore * 3 -    // 찬 칸이 많은 경우
-                emptyNumbers * cellScore * 4;   // 빈 칸이 많은 경우 빼기
+                continuedCells * cellScore * 11 +  // 연속된 셀
+                (this.tetrisColumns - fillNumbers) * cellScore * 4 -    // 찬 칸이 많은 경우
+                emptyNumbers * cellScore * 6;   // 빈 칸이 많은 경우 빼기
             if (howManyCells === this.tetrisColumns) {  // Cell이 꽉찬 경우
                 result += cellScore * this.tetrisColumns * 10; 
             }
