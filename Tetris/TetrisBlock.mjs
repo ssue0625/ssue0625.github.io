@@ -215,6 +215,7 @@ export default class TetrisBlock {
         }
         if (!this.tetrisPanel.canDownable(this.blocks)) {
             this.tetrisPanel.informIAmDead(newDeltaRow);
+            alert('GAME OVER');
             return;
         }
         this.newDeltaRow++;

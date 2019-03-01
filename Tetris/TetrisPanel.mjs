@@ -56,7 +56,7 @@ export default class TetrisPanel {
                 if (this.scorePanel[rowIndex][columnIndex] != this.backgroundColor) {
                     howManyCells++;
                     continuedCells++;
-                    result += sideDistance * cellScore;  // 사이드로
+                    result += sideDistance * cellScore; // 사이드로
                     isEmpty = false;
                     if (!isFill) {
                         fillNumbers++;
@@ -75,12 +75,12 @@ export default class TetrisPanel {
                 }
             }
             result = result +
-                howManyCells * cellScore +  // 행에 있는 블럭의 전체 셀 갯수
-                continuedCells * cellScore * 11 +  // 연속된 셀
-                (this.tetrisColumns - fillNumbers) * cellScore * 4 -    // 찬 칸이 많은 경우
-                emptyNumbers * cellScore * 6;   // 빈 칸이 많은 경우 빼기
-            if (howManyCells === this.tetrisColumns) {  // Cell이 꽉찬 경우
-                result += cellScore * this.tetrisColumns * 10; 
+                howManyCells * cellScore + // 행에 있는 블럭의 전체 셀 갯수
+                continuedCells * cellScore * 11 + // 연속된 셀
+                (this.tetrisColumns - fillNumbers) * cellScore * 4 - // 찬 칸이 많은 경우
+                emptyNumbers * cellScore * 6; // 빈 칸이 많은 경우 빼기
+            if (howManyCells === this.tetrisColumns) { // Cell이 꽉찬 경우
+                result += cellScore * this.tetrisColumns * 10;
             }
         }
         //$.c(row, column, result);
