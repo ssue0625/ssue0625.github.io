@@ -47,7 +47,7 @@ export default class TetrisPanel {
         let rowConnectedCells = 0; // 이전 행과 현재 행이 블럭으로 차있는 경우의 수
         let rowDisconnectedCells = 0;   // 이전 행과 현재 행이 블럭으로 차있지 않은 경우의 수
         for (let rowIndex = 0; rowIndex < this.tetrisRows; rowIndex++) {
-            cellScore = Math.pow(this.tetrisColumns, rowIndex + 1); // 행의 셀이 가지는 기본 점수 .
+            cellScore = Math.pow(this.tetrisColumns, rowIndex + 1); // 행의 셀이 가지는 기본 점수.
             smallCellScore = cellScore / this.tetrisColumns;
             howManyCells = 0; // 현재 행에 몇개의 셀이 블럭인가?
             continuedCells = 0; // 몇 개의 셀이 연속한 블럭인가
@@ -66,7 +66,7 @@ export default class TetrisPanel {
                 if (this.scorePanel[rowIndex][columnIndex] != this.backgroundColor) {
                     howManyCells++;
                     continuedCells++;
-                    result += sideDistance * smallCellScore; // 조금만 사이드로
+                    result += sideDistance * smallCellScore / 2; // 조금만 사이드로
                     isEmpty = false;
                     if (!isFill) {
                         fillNumbers++;
@@ -80,7 +80,7 @@ export default class TetrisPanel {
                     }
                 } else {
                     if (continuedCells != 0) {
-                        result += continuedCells * smallCellScore; // 연속된 셀
+                        result += continuedCells * smallCellScore * 1.1; // 연속된 셀
                         continuedCells = 0;
                     }
                     if (!isEmpty) {
@@ -92,13 +92,13 @@ export default class TetrisPanel {
             }
             result = result +
                 howManyCells * cellScore + // 행에 있는 블럭의 전체 셀 갯수
-                continuedCells * smallCellScore + // 연속된 셀
-                (this.tetrisColumns - fillNumbers) * smallCellScore - // 찬 칸이 많은 경우 더하기
-                emptyNumbers * smallCellScore + // 빈 칸이 많은 경우 빼기
-                rowConnectedCells * cellScore * 1.2 -  // 상하 행이 블럭인 경우, 가중치 적용
-                rowDisconnectedCells * smallCellScore;  // 상하 행이 빈 경우, 빼기
+                continuedCells * smallCellScore * 1.1 + // 연속된 셀
+                //(this.tetrisColumns - fillNumbers) * smallCellScore + // 찬 칸이 많은 경우 더하기
+                (this.tetrisColumns - emptyNumbers) * smallCellScore + // 빈 칸이 많은 경우 빼기
+                rowConnectedCells * cellScore +  // 상하 행이 블럭인 경우, 가중치 적용
+                (this.tetrisColumns - rowDisconnectedCells) * smallCellScore; // 상하 행이 빈 경우, 빼기
             if (howManyCells === this.tetrisColumns) { // Cell이 꽉찬 경우
-                result += cellScore * this.tetrisColumns;
+                result += cellScore;// * this.tetrisColumns;
             }
         }
         //$.c(row, column, result);

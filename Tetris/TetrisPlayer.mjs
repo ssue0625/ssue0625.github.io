@@ -6,8 +6,8 @@ export default class TetrisPlayer {
         //this.tetrisBlock
         //this.blocks
         this.makePanelDataWhenMoved = this.tetrisPanel.changePanelBackground.bind(this.tetrisPanel);
-        this.speedWhenDownKeyPressed = 110;
-        this.autoPlaySpeed = 40;
+        this.speedWhenDownKeyPressed = 100;
+        this.autoPlaySpeed = 30;
         setTimeout(() => {
             this.doAfterInstanciated();
         }, 0);
