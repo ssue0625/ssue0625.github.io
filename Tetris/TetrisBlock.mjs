@@ -215,7 +215,7 @@ export default class TetrisBlock {
         }
         if (!this.tetrisPanel.canDownable(this.blocks)) {
             this.tetrisPanel.informIAmDead(newDeltaRow);
-            alert('GAME OVER');
+            //alert('GAME OVER'); // 죽기만 하면 불리어진다. => 새로운 블럭이 생기지 않는 위치를 찾아야 한다.
             return;
         }
         this.newDeltaRow++;

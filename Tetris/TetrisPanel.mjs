@@ -34,6 +34,7 @@ export default class TetrisPanel {
         // 점수판 계산하고,
         let result = 0;
         let cellScore;
+        let smallCellScore; // 가중치
         let howManyCells;
         let continuedCells;
         let sideDistance;
@@ -41,8 +42,13 @@ export default class TetrisPanel {
         let emptyNumbers;
         let isFill;
         let fillNumbers;
+        let previousRowCells = [];  // 이전 행 중 채워진 셀
+        let currentRowCells = [];   // 현재 행 중 채워진 셀
+        let rowConnectedCells = 0; // 이전 행과 현재 행이 블럭으로 차있는 경우의 수
+        let rowDisconnectedCells = 0;   // 이전 행과 현재 행이 블럭으로 차있지 않은 경우의 수
         for (let rowIndex = 0; rowIndex < this.tetrisRows; rowIndex++) {
-            cellScore = Math.pow(this.tetrisColumns * 10, rowIndex + 1); // 행의 셀이 가지는 기본 점수 .
+            cellScore = Math.pow(this.tetrisColumns, rowIndex + 1); // 행의 셀이 가지는 기본 점수 .
+            smallCellScore = cellScore / this.tetrisColumns;
             howManyCells = 0; // 현재 행에 몇개의 셀이 블럭인가?
             continuedCells = 0; // 몇 개의 셀이 연속한 블럭인가
             sideDistance = 0; // 중앙 셀에서 얼마나 떨어져 있는가?
@@ -50,21 +56,31 @@ export default class TetrisPanel {
             emptyNumbers = 0;
             isFill = false;
             fillNumbers = 0;
+            previousRowCells = currentRowCells;
+            currentRowCells = [];
+            rowConnectedCells = 0;
+            rowDisconnectedCells = 0;
             for (let columnIndex = 0; columnIndex < this.tetrisColumns; columnIndex++) {
                 // 몇번 째 행, 몇번 째 열에 블록이 있는가?
                 sideDistance = Math.abs(this.tetrisColumns / 2 - columnIndex);
                 if (this.scorePanel[rowIndex][columnIndex] != this.backgroundColor) {
                     howManyCells++;
                     continuedCells++;
-                    result += sideDistance * cellScore; // 사이드로
+                    result += sideDistance * smallCellScore; // 조금만 사이드로
                     isEmpty = false;
                     if (!isFill) {
                         fillNumbers++;
                         isFill = true;
                     }
+                    currentRowCells.push(columnIndex);  // 현재 열이 블럭이면, 열 번호 저장
+                    if (previousRowCells.includes(columnIndex)) {   // 위의 행에 현재 열 번호가 있으면,
+                        rowConnectedCells++;
+                    } else {
+                        rowDisconnectedCells++;
+                    }
                 } else {
                     if (continuedCells != 0) {
-                        result += continuedCells * cellScore * 11; // 연속된 셀
+                        result += continuedCells * smallCellScore; // 연속된 셀
                         continuedCells = 0;
                     }
                     if (!isEmpty) {
@@ -76,11 +92,13 @@ export default class TetrisPanel {
             }
             result = result +
                 howManyCells * cellScore + // 행에 있는 블럭의 전체 셀 갯수
-                continuedCells * cellScore * 11 + // 연속된 셀
-                (this.tetrisColumns - fillNumbers) * cellScore * 4 - // 찬 칸이 많은 경우
-                emptyNumbers * cellScore * 6; // 빈 칸이 많은 경우 빼기
+                continuedCells * smallCellScore + // 연속된 셀
+                (this.tetrisColumns - fillNumbers) * smallCellScore - // 찬 칸이 많은 경우 더하기
+                emptyNumbers * smallCellScore + // 빈 칸이 많은 경우 빼기
+                rowConnectedCells * cellScore * 1.2 -  // 상하 행이 블럭인 경우, 가중치 적용
+                rowDisconnectedCells * smallCellScore;  // 상하 행이 빈 경우, 빼기
             if (howManyCells === this.tetrisColumns) { // Cell이 꽉찬 경우
-                result += cellScore * this.tetrisColumns * 10;
+                result += cellScore * this.tetrisColumns;
             }
         }
         //$.c(row, column, result);
@@ -137,6 +155,9 @@ export default class TetrisPanel {
             //$.c(row);
             this.tetrisBlock = new TetrisBlock(this, this.changePanelBackground.bind(this));
             //this.informBlockCreated();
+        } else {
+            $.c('Game Over');
+            //alert('Game Over');
         }
     }
     checkLineDeletable() {
